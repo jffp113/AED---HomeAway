@@ -1,5 +1,6 @@
 package homeAway;
 
-public class InexistentUserException {
+@SuppressWarnings("serial")
+public class InexistentUserException extends Exception{
 
 }

@@ -2,14 +2,14 @@ package homeAway;
 
 public class PropertyClass implements PropertyWritable {
 
-	User owner;
-	String idHome;
-	String adress;
-	String description;
-	String local;
-	int price;
-	int maxPersons;
-	int points;
+	private	User owner;
+	private String idHome;
+	private	String adress;
+	private String description;
+	private String local;
+	private int price;
+	private int maxPersons;
+	private int points;
 
 	public PropertyClass(String idHome, User idUser, int price, int maxPersons, String local, String description,
 			String adress) {

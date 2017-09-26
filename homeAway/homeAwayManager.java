@@ -11,5 +11,9 @@ public interface homeAwayManager {
 	void changeUserInformation(String idUser, String email, String phoneNumber,
 			String address) throws UserAlreadyExistException ;
 	
-	void removeUser();
+	void removeUser(String idUser) throws InexistentUserException,UserIsOwnerException;
+	
+	void getUserInformation(String idUser) throws InexistentUserException;
+	
+	
 }

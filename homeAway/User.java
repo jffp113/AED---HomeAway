@@ -18,5 +18,5 @@ public interface User {
 	
 	String getPhoneNumber();
 	
-	Property listProperties();
+	Property listProperties() throws UserIsNotOwnerException;
 }

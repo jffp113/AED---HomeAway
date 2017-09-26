@@ -15,7 +15,8 @@ public class UserClass implements UserWritable{
 	private Property properties;
 	
 	//Constructor
-	public UserClass(String idUser, String email, String phoneNumber, String nacionality, String address) {
+	public UserClass(String idUser, String email, String phoneNumber,
+			String nacionality, String address) {
 		this.idUser = idUser;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
@@ -78,7 +79,9 @@ public class UserClass implements UserWritable{
 
 
 	@Override
-	public Property listProperties() {
+	public Property listProperties() throws UserIsNotOwnerException {
+		if(this.properties == null)
+			throw new UserIsNotOwnerException();
 		return properties;
 	}
 	

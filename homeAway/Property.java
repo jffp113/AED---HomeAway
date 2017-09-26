@@ -5,5 +5,21 @@ package homeAway;
  * @author Tiago Fornelos (49780) t.fornelos@campus.fct.unl.pt
  */
 public interface Property {
+	
+	 String getIdHome();
+	 
+	 String getAdress();
+	 
+	 String getDescription();
+	 
+	 String getLocal();
+	 
+	  int getPrice();
+	  
+	  int getMaxPersons();
+	  
+	  User getOwner();
+	  
+	  int getPoints();
 
 }

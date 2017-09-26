@@ -6,4 +6,8 @@ package homeAway;
  */
 interface PropertyWritable extends Property{
 	
+	
+	
+	
+	
 }

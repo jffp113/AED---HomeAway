@@ -6,4 +6,17 @@ package homeAway;
  */
 public interface User {
 
+	String getIdUser();
+	
+	String getName();
+	
+	String getNacionality();
+	
+	String getAddress();
+	
+	String getEmail();
+	
+	String getPhoneNumber();
+	
+	
 }

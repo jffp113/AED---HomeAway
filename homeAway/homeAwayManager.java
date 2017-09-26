@@ -9,11 +9,11 @@ public interface homeAwayManager {
 			String nacionality, String address) throws UserAlreadyExistException; 
 	
 	void changeUserInformation(String idUser, String email, String phoneNumber,
-			String address) throws UserAlreadyExistException ;
+			String address) throws InexistentUserException ;
 	
 	void removeUser(String idUser) throws InexistentUserException,UserIsOwnerException;
 	
-	void getUserInformation(String idUser) throws InexistentUserException;
+	User getUserInformation(String idUser) throws InexistentUserException;
 	
 	
 }

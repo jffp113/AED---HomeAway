@@ -19,4 +19,6 @@ public interface User {
 	String getPhoneNumber();
 	
 	Property listProperties() throws UserIsNotOwnerException;
+	
+	boolean isOwner(); // access on main ?
 }

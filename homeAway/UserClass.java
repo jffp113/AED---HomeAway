@@ -84,5 +84,11 @@ public class UserClass implements UserWritable{
 			throw new UserIsNotOwnerException();
 		return properties;
 	}
+
+
+	@Override
+	public boolean isOwner() {
+		return this.properties !=null;
+	}
 	
 }

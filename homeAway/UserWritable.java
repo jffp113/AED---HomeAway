@@ -6,7 +6,7 @@ package homeAway;
  */
 interface UserWritable extends User  {
 	
-	void setEmail(String newName);
+	void setEmail(String newEmail);
 	void setPhoneNumber(String newNumber);
 	void setAddress(String newAddress);
 	

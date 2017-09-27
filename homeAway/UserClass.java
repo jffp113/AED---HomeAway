@@ -1,7 +1,12 @@
 package homeAway;
 
+import dataStructures.DoublyLinkedList;
+import dataStructures.Iterator;
+import dataStructures.List;
+
 public class UserClass implements UserWritable{
 	//Constants
+	
 	
 	//Variables
 	private String idUser;
@@ -15,6 +20,8 @@ public class UserClass implements UserWritable{
 	private Property properties;
 	private int numberProperties;
 	
+	private List<Property> stays;
+	
 	//Constructor
 	public UserClass(String idUser, String email, String phoneNumber,
 			String nacionality, String address) {
@@ -26,6 +33,7 @@ public class UserClass implements UserWritable{
 		
 		this.numberProperties = 0;
 		
+		stays = new DoublyLinkedList<Property>();
 		properties = null;
 	}
 	
@@ -101,7 +109,13 @@ public class UserClass implements UserWritable{
 
 	@Override
 	public void addStay(Property property) {
-		//TODO
+		stays.addLast(property);
+	}
+
+
+	@Override
+	public Iterator<Property> getStaysIterator() {
+		return stays.iterator();
 	}
 	
 }

@@ -1,5 +1,7 @@
 package homeAway;
 
+import dataStructures.Iterator;
+
 public class homeAwayManagerClass implements homeAwayManager {
 	// Constants
 
@@ -115,14 +117,14 @@ public class homeAwayManagerClass implements homeAwayManager {
 		return users.listProperties();
 	}
 	
-	/*public Iterator<Properties> listStays(String idUser) throws InexistentUserException, UserIsNotTraveller{
+	public Iterator<Property> listStays(String idUser) throws InexistentUserException, UserIsNotTraveller{
 		if(users == null || !users.getIdUser().equals(idUser))
 			throw new InexistentUserException();
-		if(users.getNumberOfStays() == 0)
+		if(!users.getStaysIterator().hasNext())
 			throw new UserIsNotTraveller();
 		
-		return users.getStayIterator();
-	}*/
+		return users.getStaysIterator();
+	}
 	
 	public Property searchProperty(int persons,String local) throws InvalidInformationException, NoSearchResultsException {
 		if(persons < 0)

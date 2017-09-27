@@ -11,4 +11,5 @@ interface UserWritable extends User  {
 	void setAddress(String newAddress);
 	
 	void addNewProperty(Property newProp);
+	void addStay(Property property);
 }

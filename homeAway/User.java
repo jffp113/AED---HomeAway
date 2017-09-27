@@ -21,4 +21,6 @@ public interface User {
 	Property listProperties() throws UserIsNotOwnerException;
 	
 	boolean isOwner(); // access on main ?
+	
+	public int getNumberProperties();
 }

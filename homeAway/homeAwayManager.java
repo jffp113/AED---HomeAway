@@ -16,4 +16,19 @@ public interface homeAwayManager {
 	User getUserInformation(String idUser) throws InexistentUserException;
 	
 	
+	public void addProperty(String idHome, String idUser, int price, int maxPersons, String local, String description,
+			String address) throws InvalidInformationException, InexistentUserException, PropertyAlreadyExistException;
+	
+	public void removeProperty(String idHome) throws InexistentPropertyException, PropertyAlreadyVisitedException;
+	
+	
+	public Property getPropertyInformation(String idHome) throws InexistentPropertyException;
+	
+	public void addStayEvaluation(String idUser,String idHome,int points) throws InvalidInformationException,
+	InexistentUserException,InexistentPropertyException, UserIsOwnerException;
+	
+	public void addStay(String idUser,String idHome) throws InexistentUserException,InexistentPropertyException,
+	UserIsNotOwnerException;
+	
+	public Property listOwnerProperties(String idUser) throws InexistentUserException,UserIsNotOwnerException;
 }

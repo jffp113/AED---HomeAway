@@ -14,12 +14,15 @@ public interface Property {
 	 
 	 String getLocal();
 	 
-	  int getPrice();
+	 int getPrice();
 	  
-	  int getMaxPersons();
+	 int getMaxPersons();
 	  
-	  User getOwner();
+	 User getOwner();
 	  
-	  int getPoints();
+	 int getPoints();
 
+	 int getNumberOfvisits();
+	 
+	 
 }

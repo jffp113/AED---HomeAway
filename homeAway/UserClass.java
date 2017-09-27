@@ -13,6 +13,7 @@ public class UserClass implements UserWritable{
 	private String phoneNumber;
 	
 	private Property properties;
+	private int numberProperties;
 	
 	//Constructor
 	public UserClass(String idUser, String email, String phoneNumber,
@@ -22,6 +23,8 @@ public class UserClass implements UserWritable{
 		this.phoneNumber = phoneNumber;
 		this.nacionality = nacionality;
 		this.address = address;
+		
+		this.numberProperties = 0;
 		
 		properties = null;
 	}
@@ -75,12 +78,13 @@ public class UserClass implements UserWritable{
 	@Override
 	public void addNewProperty(Property newProp) {
 		this.properties = newProp;
+		this.numberProperties++;
 	}
 
 
 	@Override
 	public Property listProperties() throws UserIsNotOwnerException {
-		if(this.properties == null)
+		if(this.getNumberProperties() == 0)
 			throw new UserIsNotOwnerException();
 		return properties;
 	}
@@ -89,6 +93,15 @@ public class UserClass implements UserWritable{
 	@Override
 	public boolean isOwner() {
 		return this.properties !=null;
+	}
+
+	public int getNumberProperties() {
+		return this.numberProperties;
+	}
+
+	@Override
+	public void addStay(Property property) {
+		//TODO
 	}
 	
 }

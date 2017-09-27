@@ -6,8 +6,6 @@ package homeAway;
  */
 interface PropertyWritable extends Property{
 	
-	
-	
-	
-	
+	void evaluateStay(int points,User user);
+	void stay(User user);
 }

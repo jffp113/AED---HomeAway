@@ -44,6 +44,8 @@ public class homeAwayManagerClass implements homeAwayManager {
 			throw new InexistentUserException();
 		else if (users.isOwner())
 			throw new UserIsOwnerException();
+		
+		users = null;
 	}
 
 	@Override

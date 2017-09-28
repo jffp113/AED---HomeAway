@@ -1,6 +1,8 @@
 import java.util.Scanner;
 
 import homeAway.InexistentUserException;
+import homeAway.InvalidInformationException;
+import homeAway.PropertyAlreadyExistException;
 import homeAway.User;
 import homeAway.UserAlreadyExistException;
 import homeAway.UserIsOwnerException;
@@ -8,6 +10,8 @@ import homeAway.homeAwayManager;
 import homeAway.homeAwayManagerClass;
 
 /**
+ * Main Class
+ * 
  * @author Jorge Pereira (49771) jff.pereira@campus.fct.unl.pt
  * @author Tiago Fornelos (49780) t.fornelos@campus.fct.unl.pt
  */
@@ -40,18 +44,18 @@ public class Main {
 	public static final String PROPERTY_SEARCH = " %s %s %s %s %d %d %d\n";
 	public static final String EXIT_MENSSAGE = "Gravado e terminado.";
 
-	// OUTPUTERROR
+	// OUTPUT_ERROR
 	public static final String USER_ALREADY_ADDED = "Utilizador exitente.";
 	public static final String USER_DOES_NOT_EXIST = "Utilizador inexitente.";
 	public static final String USER_IS_OWNER = "Utilizador e propietario.";
-	public static final String INVALIDINFO = "Dados invalidos.";
-	public static final String PROPERTYALREADYEXIST = "Propriedade existente.";
-	public static final String INEXISTENTPROPERTY = "Propriedade inexistente.";
-	public static final String PROPERTYVISITED = "Propriedade ja foi visitada.";
-	public static final String TRAVELLERISOWNER = "Viajante e o proprietario.";
-	public static final String TRAVELLERISNOTOWNER = "Viajante nao e o proprietario.";
-	public static final String USERDIDNTTRAVELLED = "Utilizador nao viajou.";
-	public static final String NORESULTS = "Pesquisa nao devolveu resultados.";
+	public static final String INVALID_INFO = "Dados invalidos.";
+	public static final String PROPERTY_ALREADY_EXIST = "Propriedade existente.";
+	public static final String PROPERTY_INEXISTENT = "Propriedade inexistente.";
+	public static final String PROPERTY_VISITED = "Propriedade ja foi visitada.";
+	public static final String TRAVELLER_IS_OWNER = "Viajante e o proprietario.";
+	public static final String TRAVELLER_IS_NOT_WNER = "Viajante nao e o proprietario.";
+	public static final String USER_DIDNT_TRAVELLED = "Utilizador nao viajou.";
+	public static final String NO_RESULTS = "Pesquisa nao devolveu resultados.";
 
 	public static void main(String[] args) {
 		homeAwayManager hm = load();
@@ -131,12 +135,22 @@ public class Main {
 		return args;
 	}
 	
+	/**
+	 * Get Command
+	 * @param in Scanner to get input
+	 * @return command as a String
+	 */
 	private static String command(Scanner in) {
 		String command = in.next().toUpperCase();
 		return command;
 	}
 
-	public static void addUser(Scanner in, homeAwayManager hm) {
+	/**
+	 * Add user
+	 * @param in Scanner to receive additional arguments
+	 * @param hm Top Class in order to execute the command
+	 */
+	private static void addUser(Scanner in, homeAwayManager hm) {
 		String[] args = makeArgs(in);
 		String nacionality = in.nextLine();
 		String address = in.nextLine();
@@ -149,6 +163,11 @@ public class Main {
 		}
 	}
 
+	/**
+	 * This method allows to change user information
+	 * @param in Scanner to receive additional arguments
+	 * @param hm Top Class in order to execute the command
+	 */
 	private static void changeUserInfo(Scanner in, homeAwayManager hm) {
 		String[] args = makeArgs(in);
 		String address = in.nextLine();
@@ -161,6 +180,11 @@ public class Main {
 		}
 	}
 
+	/**
+	 * This method allows to remove users
+	 * @param in Scanner to receive additional arguments
+	 * @param hm Top Class in order to execute the command
+	 */
 	private static void removerUser(Scanner in, homeAwayManager hm) {
 		String args[] = makeArgs(in);
 		
@@ -173,7 +197,11 @@ public class Main {
 			System.out.println(USER_IS_OWNER);
 		}
 	}
-
+	/**
+	 * This method allows to get user Information
+	 * @param in Scanner to receive additional arguments
+	 * @param hm Top Class in order to execute the command
+	 */
 	private static void getUserInfo(Scanner in, homeAwayManager hm) {
 		String[] args = makeArgs(in);
 		User user = null;
@@ -185,8 +213,25 @@ public class Main {
 		}
 	}
 
+	/**
+	 * This method allows to add a new Property
+	 * @param in Scanner to receive additional arguments
+	 * @param hm Top Class in order to execute the command
+	 */
 	private static void addProperty(Scanner in, homeAwayManager hm) {
-
+		String[] args = makeArgs(in);
+		String description = in.nextLine();
+		String address = in.nextLine();
+		
+		try {
+			hm.addProperty(args[0], args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]), args[4], description, address);
+		} catch (InvalidInformationException e) {
+			System.out.println(INVALID_INFO);
+		} catch (InexistentUserException e) {
+			System.out.println(USER_DOES_NOT_EXIST);
+		} catch (PropertyAlreadyExistException e) {
+			System.out.println(PROPERTY_ALREADY_EXIST);
+		}
 	}
 
 	private static void removeProperty(Scanner in, homeAwayManager hm) {

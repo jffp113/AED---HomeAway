@@ -111,7 +111,7 @@ public class Main {
 	 * @param in Scanner to read the next of the line
 	 * @return arguments as a Array of String
 	 */
-	public static String[] makeArgs(Scanner in) {
+	private static String[] makeArgs(Scanner in) {
 		String fullArgs = in.nextLine().trim();
 		String tmp[] = new String[20];
 		String args[];
@@ -131,7 +131,7 @@ public class Main {
 		return args;
 	}
 	
-	public static String command(Scanner in) {
+	private static String command(Scanner in) {
 		String command = in.next().toUpperCase();
 		return command;
 	}
@@ -149,7 +149,7 @@ public class Main {
 		}
 	}
 
-	public static void changeUserInfo(Scanner in, homeAwayManager hm) {
+	private static void changeUserInfo(Scanner in, homeAwayManager hm) {
 		String[] args = makeArgs(in);
 		String address = in.nextLine();
 		
@@ -161,7 +161,7 @@ public class Main {
 		}
 	}
 
-	public static void removerUser(Scanner in, homeAwayManager hm) {
+	private static void removerUser(Scanner in, homeAwayManager hm) {
 		String args[] = makeArgs(in);
 		
 		try {
@@ -174,7 +174,7 @@ public class Main {
 		}
 	}
 
-	public static void getUserInfo(Scanner in, homeAwayManager hm) {
+	private static void getUserInfo(Scanner in, homeAwayManager hm) {
 		String[] args = makeArgs(in);
 		User user = null;
 		try {
@@ -185,43 +185,43 @@ public class Main {
 		}
 	}
 
-	public static void addProperty(Scanner in, homeAwayManager hm) {
+	private static void addProperty(Scanner in, homeAwayManager hm) {
 
 	}
 
-	public static void removeProperty(Scanner in, homeAwayManager hm) {
+	private static void removeProperty(Scanner in, homeAwayManager hm) {
 
 	}
 
-	public static void getPropertyInfo(Scanner in, homeAwayManager hm) {
+	private static void getPropertyInfo(Scanner in, homeAwayManager hm) {
 
 	}
 
-	public static void addStay(Scanner in, homeAwayManager hm) {
+	private static void addStay(Scanner in, homeAwayManager hm) {
 
 	}
 
-	public static void listOwnerProperties(Scanner in, homeAwayManager hm) {
+	private static void listOwnerProperties(Scanner in, homeAwayManager hm) {
 
 	}
 
-	public static void listTravellerStays(Scanner in, homeAwayManager hm) {
+	private static void listTravellerStays(Scanner in, homeAwayManager hm) {
 
 	}
 
-	public static void searchProperty(Scanner in, homeAwayManager hm) {
+	private static void searchProperty(Scanner in, homeAwayManager hm) {
 
 	}
 
-	public static void listBestProperties(Scanner in, homeAwayManager hm) {
+	private static void listBestProperties(Scanner in, homeAwayManager hm) {
 
 	}
 
-	public static void save(homeAwayManager hm) {
+	private static void save(homeAwayManager hm) {
 
 	}
 
-	public static homeAwayManager load() {
+	private static homeAwayManager load() {
 
 		return new homeAwayManagerClass();
 	}

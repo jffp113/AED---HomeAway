@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 import homeAway.InexistentUserException;
+import homeAway.User;
 import homeAway.UserAlreadyExistException;
 import homeAway.UserIsOwnerException;
 import homeAway.homeAwayManager;
@@ -31,7 +32,7 @@ public class Main {
 	public static final String USER_ADDED = "Insercao de utilizador com sucesso.";
 	public static final String USER_UPDATED = "Utilizador atualizado com sucesso.";
 	public static final String USER_REMOVED = "Utilizador removido com sucesso.";
-	public static final String USER_SEARCH_RESULT = "nome: %s, %s, %s, %s\n";
+	public static final String USER_SEARCH_RESULT = "%s: %s, %s, %s, %s\n";
 	public static final String PROPERTY_ADDED = "Propriedade adicionada com sucesso.";
 	public static final String PROPERTY_REMOVED = "Propriedade removida com sucesso.";
 	public static final String PROPERTY_DESCRIPTION = "descricao: %s, %s, %d, %d, %d, %s\n";
@@ -174,7 +175,14 @@ public class Main {
 	}
 
 	public static void getUserInfo(Scanner in, homeAwayManager hm) {
-
+		String[] args = makeArgs(in);
+		User user = null;
+		try {
+			user = hm.getUserInformation(args[0]);
+			System.out.printf(USER_SEARCH_RESULT,user.getName(),user.getAddress(),user.getNacionality(),user.getEmail(),user.getPhoneNumber());
+		} catch (InexistentUserException e) {
+			System.out.println(USER_DOES_NOT_EXIST);
+		}
 	}
 
 	public static void addProperty(Scanner in, homeAwayManager hm) {

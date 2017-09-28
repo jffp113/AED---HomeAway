@@ -50,7 +50,7 @@ public class homeAwayManagerClass implements homeAwayManager {
 
 	@Override
 	public User getUserInformation(String idUser) throws InexistentUserException {
-		if (!users.getIdUser().equals(idUser))
+		if (users == null || !users.getIdUser().equals(idUser))
 			throw new InexistentUserException();
 
 		return users;

@@ -12,14 +12,14 @@ public class homeAwayManagerClass implements homeAwayManager {
 	// Constructor
 
 	@Override
-	public void newUser(String idUser, String email, String phoneNumber, String nacionality, String address)
+	public void newUser(String idUser, String email, String phoneNumber, String nacionality, String address, String name)
 			throws UserAlreadyExistException {
 
-		if (users.getIdUser().equals(idUser)) {
+		if (users != null && users.getIdUser().equals(idUser)) {
 			throw new UserAlreadyExistException();
 		}
 
-		users = new UserClass(idUser, email, phoneNumber, nacionality, address);
+		users = new UserClass(idUser, email, phoneNumber, nacionality, address,name);
 
 	}
 
@@ -27,7 +27,7 @@ public class homeAwayManagerClass implements homeAwayManager {
 	public void changeUserInformation(String idUser, String email, String phoneNumber, String address)
 			throws InexistentUserException {
 
-		if (!users.getIdUser().equals(idUser)) {
+		if (users == null || !users.getIdUser().equals(idUser)) {
 			throw new InexistentUserException();
 		}
 		UserWritable u;

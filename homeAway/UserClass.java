@@ -24,13 +24,13 @@ public class UserClass implements UserWritable{
 	
 	//Constructor
 	public UserClass(String idUser, String email, String phoneNumber,
-			String nacionality, String address) {
+			String nacionality, String address, String name) {
 		this.idUser = idUser;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
 		this.nacionality = nacionality;
 		this.address = address;
-		
+		this.name = name;
 		this.numberProperties = 0;
 		
 		stays = new DoublyLinkedList<Property>();

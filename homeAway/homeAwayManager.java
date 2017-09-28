@@ -6,7 +6,7 @@ package homeAway;
 public interface homeAwayManager {
 	
 	void newUser(String idUser, String email, String phoneNumber,
-			String nacionality, String address) throws UserAlreadyExistException; 
+			String nacionality, String address, String name) throws UserAlreadyExistException; 
 	
 	void changeUserInformation(String idUser, String email, String phoneNumber,
 			String address) throws InexistentUserException ;
@@ -31,4 +31,5 @@ public interface homeAwayManager {
 	UserIsNotOwnerException;
 	
 	public Property listOwnerProperties(String idUser) throws InexistentUserException,UserIsNotOwnerException;
+
 }

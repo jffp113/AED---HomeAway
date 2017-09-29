@@ -12,4 +12,5 @@ interface UserWritable extends User  {
 	
 	void addNewProperty(Property newProp);
 	void addStay(Property property);
+	void removeProperty();
 }

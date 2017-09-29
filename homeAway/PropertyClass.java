@@ -21,6 +21,7 @@ public class PropertyClass implements PropertyWritable {
 		this.local=local;
 		this.description= description;
 		this.address = address;
+		
 	}
 
 	@Override

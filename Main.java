@@ -49,8 +49,8 @@ public class Main {
 	public static final String USER_SEARCH_RESULT = "%s: %s, %s, %s, %s\n";
 	public static final String PROPERTY_ADDED = "Propriedade adicionada com sucesso.";
 	public static final String PROPERTY_REMOVED = "Propriedade removida com sucesso.";
-	public static final String PROPERTY_DESCRIPTION = "descricao: %s, %s, %d, %d, %d, %s\n";
-	public static final String PROPERTY_SEARCH = " %s %s %s %s %d %d %d\n";
+	public static final String PROPERTY_DESCRIPTION = "%s: %s, %s, %d, %d, %d, %s\n";
+	public static final String PROPERTY_SEARCH = "%s %s %s %s %d %d %d\n";
 	public static final String STAY_ADDED = "Estadia adicionada com sucesso.";
 	public static final String EXIT_MENSSAGE = "Gravado e terminado.";
 
@@ -115,7 +115,7 @@ public class Main {
 			}
 			System.out.println();
 		}
-		Main.save(hm);
+		save(hm);
 		in.close();
 
 	}
@@ -257,6 +257,7 @@ public class Main {
 		try {
 			hm.addProperty(args[0], args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]), args[4], description,
 					address);
+			System.out.println(PROPERTY_ADDED);
 		} catch (InvalidInformationException e) {
 			System.out.println(INVALID_INFO);
 		} catch (UserDoesNotExistException e) {
@@ -285,7 +286,7 @@ public class Main {
 		Property p;
 		try {
 			p = hm.getPropertyInformation(idHome);
-			System.out.printf(PROPERTY_DESCRIPTION, p.getAdress(), p.getLocal(), p.getPrice(), p.getMaxPersons(),
+			System.out.printf(PROPERTY_DESCRIPTION,p.getDescription(), p.getAdress(), p.getLocal(), p.getPrice(), p.getMaxPersons(),
 					p.getPoints(), p.getIdHome());
 		} catch (PropertyDoesNotExistException e) {
 			System.out.println(PROPERTY_DOES_NOT_EXIST);

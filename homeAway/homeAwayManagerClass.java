@@ -62,18 +62,21 @@ public class homeAwayManagerClass implements homeAwayManager {
 			throw new InvalidInformationException();
 		else if(users == null || !users.getIdUser().equalsIgnoreCase(idUser))
 			throw new UserDoesNotExistException();
-		else if(properties.getIdHome().equalsIgnoreCase(idHome))
+		else if(properties != null && properties.getIdHome().equalsIgnoreCase(idHome))
 			throw new PropertyAlreadyExistException();
 		
 		properties = new PropertyClass(idHome, users, price, maxPersons, local, description, address);
+		((UserWritable)users).addNewProperty(properties);
 	}
 	
 	public void removeProperty(String idHome) throws PropertyDoesNotExistException, PropertyAlreadyVisitedException{
+	
+		
 		if(properties == null || !properties.getIdHome().equalsIgnoreCase(idHome))
 			throw new PropertyDoesNotExistException();
 		else if(properties.getNumberOfvisits() != 0)
 			throw new PropertyAlreadyVisitedException();
-		
+		((UserWritable)properties.getOwner()).removeProperty();
 		properties = null;
 		
 	}

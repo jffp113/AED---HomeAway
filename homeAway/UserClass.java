@@ -100,7 +100,7 @@ public class UserClass implements UserWritable{
 
 	@Override
 	public boolean isOwner() {
-		return this.properties !=null;
+		return this.numberProperties > 0;
 	}
 
 	public int getNumberProperties() {
@@ -116,6 +116,13 @@ public class UserClass implements UserWritable{
 	@Override
 	public Iterator<Property> getStaysIterator() {
 		return stays.iterator();
+	}
+
+
+	@Override
+	public void removeProperty() {
+		this.properties = null;
+		this.numberProperties--;
 	}
 	
 }

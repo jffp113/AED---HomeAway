@@ -7,7 +7,8 @@ import dataStructures.List;
 public class UserClass implements UserWritable{
 	//Constants
 	
-	
+	private static final long serialVersionUID = 0L;
+
 	//Variables
 	private String idUser;
 	

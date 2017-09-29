@@ -5,6 +5,8 @@ import dataStructures.Iterator;
 public class homeAwayManagerClass implements homeAwayManager {
 	// Constants
 
+	private static final long serialVersionUID = 0L;
+	
 	// Variables
 	private User users;
 	private Property properties;

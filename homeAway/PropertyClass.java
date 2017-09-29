@@ -1,7 +1,10 @@
 package homeAway;
 
 public class PropertyClass implements PropertyWritable {
-
+	//Constants
+	private static final long serialVersionUID = 0L;
+	
+	//Variables
 	private	User owner;
 	private String idHome;
 	private	String address;
@@ -12,6 +15,7 @@ public class PropertyClass implements PropertyWritable {
 	private int points;
 	private int numberVisits;
 	
+	//Constructor
 	public PropertyClass(String idHome, User idUser, int price, int maxPersons, String local, String description,
 			String address) {
 		this.idHome = idHome;

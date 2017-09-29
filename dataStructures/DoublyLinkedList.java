@@ -343,13 +343,12 @@ public class DoublyLinkedList<E> implements List<E>
     	else
     		head = headList;
     	
-    	//headList.setPrevious(tail);
     	tail = tailList;
     	this.currentSize += list.currentSize;
     	
     	//Remove Elements from list
     	list.head = null;
-    	list.head = null;
+    	list.tail = null;
     	list.currentSize = 0;
     }
 

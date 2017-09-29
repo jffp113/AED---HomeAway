@@ -53,7 +53,7 @@ public class Main {
 	public static final String PROPERTY_INEXISTENT = "Propriedade inexistente.";
 	public static final String PROPERTY_VISITED = "Propriedade ja foi visitada.";
 	public static final String TRAVELLER_IS_OWNER = "Viajante e o proprietario.";
-	public static final String TRAVELLER_IS_NOT_WNER = "Viajante nao e o proprietario.";
+	public static final String TRAVELLER_IS_NOT_OWNER = "Viajante nao e o proprietario.";
 	public static final String USER_DIDNT_TRAVELLED = "Utilizador nao viajou.";
 	public static final String NO_RESULTS = "Pesquisa nao devolveu resultados.";
 

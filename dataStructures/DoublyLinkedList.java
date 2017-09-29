@@ -325,19 +325,25 @@ public class DoublyLinkedList<E> implements List<E>
      * inserts them at the end of the list (in proper sequence).
      * @param list - list to be appended to the end of this
      */
-    public void append( DoublyLinkedList<E> list )
+    @SuppressWarnings("unused")
+	public void append( DoublyLinkedList<E> list )
     {
     	//Get Elements from list
     	DListNode<E> headList = list.head;
     	DListNode<E> tailList = list.tail;
     	
+    	if(list == null)
+    		return;
+    	
     	//Add elements from list to this
-    	if(!this.isEmpty())
+    	if(!this.isEmpty()) {
     		this.tail.setNext(headList);
+    		headList.setPrevious(tail);
+    	}
     	else
     		head = headList;
     	
-    	headList.setPrevious(tail);
+    	//headList.setPrevious(tail);
     	tail = tailList;
     	this.currentSize += list.currentSize;
     	

@@ -119,11 +119,11 @@ public class homeAwayManagerClass implements homeAwayManager {
 		return users.listProperties();
 	}
 	
-	public Iterator<Property> listStays(String idUser) throws InexistentUserException, UserIsNotTraveller{
+	public Iterator<Property> listStays(String idUser) throws InexistentUserException, UserIsNotTravellerException{
 		if(users == null || !users.getIdUser().equals(idUser))
 			throw new InexistentUserException();
 		if(!users.getStaysIterator().hasNext())
-			throw new UserIsNotTraveller();
+			throw new UserIsNotTravellerException();
 		
 		return users.getStaysIterator();
 	}

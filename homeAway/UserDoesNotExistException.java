@@ -7,6 +7,6 @@ package homeAway;
  * Exception that tells that a user does not exist on the system
  */
 @SuppressWarnings("serial")
-public class InexistentUserException extends Exception{
+public class UserDoesNotExistException extends Exception{
 
 }

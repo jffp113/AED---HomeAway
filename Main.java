@@ -1,14 +1,20 @@
-import java.util.Scanner;
 
-import homeAway.InexistentPropertyException;
-import homeAway.InexistentUserException;
+import java.util.Scanner;
+import dataStructures.Iterator;
+
+import homeAway.PropertyDoesNotExistException;
+import homeAway.TravellerIsNotOwnerException;
+import homeAway.TravellerIsOwnerException;
+import homeAway.UserDoesNotExistException;
 import homeAway.InvalidInformationException;
+import homeAway.NoSearchResultsException;
 import homeAway.Property;
 import homeAway.PropertyAlreadyExistException;
 import homeAway.PropertyAlreadyVisitedException;
 import homeAway.User;
 import homeAway.UserAlreadyExistException;
 import homeAway.UserIsNotOwnerException;
+import homeAway.UserIsNotTravellerException;
 import homeAway.UserIsOwnerException;
 import homeAway.homeAwayManager;
 import homeAway.homeAwayManagerClass;
@@ -53,9 +59,9 @@ public class Main {
 	public static final String USER_DOES_NOT_EXIST = "Utilizador inexitente.";
 	public static final String USER_IS_OWNER = "Utilizador e propietario.";
 	public static final String USER_IS_NOT_OWNER = "Utilizador nao e propietario.";
-	public static final String USER_DIDNT_TRAVELLED = "Utilizador nao viajou.";
+	public static final String USER_IS_NOT_TRAVELLER = "Utilizador nao viajou.";
 	public static final String PROPERTY_ALREADY_EXIST = "Propriedade existente.";
-	public static final String PROPERTY_INEXISTENT = "Propriedade inexistente.";
+	public static final String PROPERTY_DOES_NOT_EXIST = "Propriedade inexistente.";
 	public static final String PROPERTY_VISITED = "Propriedade ja foi visitada.";
 	public static final String TRAVELLER_IS_OWNER = "Viajante e o proprietario.";
 	public static final String TRAVELLER_IS_NOT_OWNER = "Viajante nao e o proprietario.";
@@ -189,7 +195,7 @@ public class Main {
 		try {
 			hm.changeUserInformation(args[0], args[1], args[2], address);
 			System.out.println(USER_UPDATED);
-		} catch (InexistentUserException e) {
+		} catch (UserDoesNotExistException e) {
 			System.out.println(USER_DOES_NOT_EXIST);
 		}
 	}
@@ -208,7 +214,7 @@ public class Main {
 		try {
 			hm.removeUser(idUser);
 			System.out.println(USER_REMOVED);
-		} catch (InexistentUserException e) {
+		} catch (UserDoesNotExistException e) {
 			System.out.println(USER_DOES_NOT_EXIST);
 		} catch (UserIsOwnerException e) {
 			System.out.println(USER_IS_OWNER);
@@ -230,7 +236,7 @@ public class Main {
 			user = hm.getUserInformation(args[0]);
 			System.out.printf(USER_SEARCH_RESULT, user.getName(), user.getAddress(), user.getNacionality(),
 					user.getEmail(), user.getPhoneNumber());
-		} catch (InexistentUserException e) {
+		} catch (UserDoesNotExistException e) {
 			System.out.println(USER_DOES_NOT_EXIST);
 		}
 	}
@@ -253,7 +259,7 @@ public class Main {
 					address);
 		} catch (InvalidInformationException e) {
 			System.out.println(INVALID_INFO);
-		} catch (InexistentUserException e) {
+		} catch (UserDoesNotExistException e) {
 			System.out.println(USER_DOES_NOT_EXIST);
 		} catch (PropertyAlreadyExistException e) {
 			System.out.println(PROPERTY_ALREADY_EXIST);
@@ -266,8 +272,8 @@ public class Main {
 			hm.removeProperty(idHome);
 			System.out.println(PROPERTY_REMOVED);
 
-		} catch (InexistentPropertyException e) {
-			System.out.println(PROPERTY_INEXISTENT);
+		} catch (PropertyDoesNotExistException e) {
+			System.out.println(PROPERTY_DOES_NOT_EXIST);
 		} catch (PropertyAlreadyVisitedException e) {
 			System.out.println(PROPERTY_VISITED);
 		}
@@ -281,8 +287,8 @@ public class Main {
 			p = hm.getPropertyInformation(idHome);
 			System.out.printf(PROPERTY_DESCRIPTION, p.getAdress(), p.getLocal(), p.getPrice(), p.getMaxPersons(),
 					p.getPoints(), p.getIdHome());
-		} catch (InexistentPropertyException e) {
-			System.out.println(PROPERTY_INEXISTENT);
+		} catch (PropertyDoesNotExistException e) {
+			System.out.println(PROPERTY_DOES_NOT_EXIST);
 
 		}
 	}
@@ -290,51 +296,92 @@ public class Main {
 	private static void addStay(Scanner in, homeAwayManager hm) {
 		String[] args = makeArgs(in);
 		try {
-			if(args.length==3) {
-				
-				hm.addStayEvaluation(args[0], args[1],Integer.parseInt(args[2]));
+			if (args.length == 3) {
+
+				hm.addStayEvaluation(args[0], args[1], Integer.parseInt(args[2]));
 				System.out.println(STAY_ADDED);
-			}
-			else {
+			} else {
 				hm.addStay(args[0], args[1]);
 				System.out.println(STAY_ADDED);
 			}
-		}
-		catch(InexistentUserException e) {
-			System.out.println(USER_DOES_NOT_EXIST);
-		}
-		catch(InexistentPropertyException e) {
-			System.out.println(PROPERTY_INEXISTENT);
-		}
-		catch(UserIsNotOwnerException e) {
-			System.out.println(TRAVELLER_IS_NOT_OWNER);
-		
-		} catch (UserIsOwnerException e) {
-			System.out.println(TRAVELLER_IS_OWNER);
-		} 
-		catch (InvalidInformationException e) {
+		} catch (InvalidInformationException e) {
 			System.out.println(INVALID_INFO);
+		} catch (UserDoesNotExistException e) {
+			System.out.println(USER_DOES_NOT_EXIST);
+		} catch (PropertyDoesNotExistException e) {
+			System.out.println(PROPERTY_DOES_NOT_EXIST);
+		} catch (TravellerIsOwnerException e) {
+			System.out.println(TRAVELLER_IS_OWNER);
+		} catch (TravellerIsNotOwnerException e) {
+			System.out.println(TRAVELLER_IS_NOT_OWNER);
+
 		}
+
 	}
 
 	private static void listOwnerProperties(Scanner in, homeAwayManager hm) {
 		String idUser = in.nextLine().trim();
+		try {
+			Property p = hm.listOwnerProperties(idUser);
+			System.out.printf(PROPERTY_SEARCH, p.getIdHome(), p.getDescription(), p.getAdress(), p.getLocal(),
+					p.getPrice(), p.getMaxPersons(), p.getPoints());
+
+		} catch (UserDoesNotExistException e) {
+			System.out.println(USER_DOES_NOT_EXIST);
+
+		} catch (UserIsNotOwnerException e) {
+			System.out.println(USER_IS_NOT_OWNER);
+		}
 	}
 
 	private static void listTravellerStays(Scanner in, homeAwayManager hm) {
+		String idUser = in.nextLine().trim();
+		try {
+			Iterator<Property> ip = hm.listStays(idUser);
+			Property p;
+			while (ip.hasNext()) {
+				p = ip.next();
+				System.out.printf(PROPERTY_SEARCH, p.getIdHome(), p.getDescription(), p.getAdress(), p.getLocal(),
+						p.getPrice(), p.getMaxPersons(), p.getPoints());
+			}
+		} catch (UserDoesNotExistException e) {
+			System.out.println(USER_DOES_NOT_EXIST);
+
+		} catch (UserIsNotTravellerException e) {
+			System.out.println(USER_IS_NOT_TRAVELLER);
+		}
 
 	}
 
 	private static void searchProperty(Scanner in, homeAwayManager hm) {
+		String[] args = makeArgs(in);
+		try {
+			Property p = hm.searchProperty(Integer.parseInt(args[0]), args[1]);
+			System.out.printf(PROPERTY_SEARCH, p.getIdHome(), p.getDescription(), p.getAdress(), p.getLocal(),
+					p.getPrice(), p.getMaxPersons(), p.getPoints());
+		} 
+		catch (InvalidInformationException e) {
+			System.out.println(INVALID_INFO);
+		} catch (NoSearchResultsException e) {
+			System.out.println(NO_RESULTS);
+		}
 
 	}
 
 	private static void listBestProperties(Scanner in, homeAwayManager hm) {
-
+		String local = in.nextLine().trim();
+		try {
+			Property p = hm.listBestProperty(local);
+			System.out.printf(PROPERTY_SEARCH, p.getIdHome(), p.getDescription(), p.getAdress(), p.getLocal(),
+					p.getPrice(), p.getMaxPersons(), p.getPoints());
+		} catch (NoSearchResultsException e) {
+			System.out.println(NO_RESULTS);
+		}
 	}
 
 	private static void save(homeAwayManager hm) {
-
+		System.out.println(EXIT_MENSSAGE);
+		
 	}
 
 	private static homeAwayManager load() {

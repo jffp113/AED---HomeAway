@@ -15,7 +15,7 @@ public class homeAwayManagerClass implements homeAwayManager {
 	public void newUser(String idUser, String email, String phoneNumber, String nacionality, String address, String name)
 			throws UserAlreadyExistException {
 
-		if (users != null && users.getIdUser().equals(idUser)) {
+		if (users != null && users.getIdUser().equalsIgnoreCase(idUser)) {
 			throw new UserAlreadyExistException();
 		}
 
@@ -25,10 +25,10 @@ public class homeAwayManagerClass implements homeAwayManager {
 
 	@Override
 	public void changeUserInformation(String idUser, String email, String phoneNumber, String address)
-			throws InexistentUserException {
+			throws UserDoesNotExistException {
 
-		if (users == null || !users.getIdUser().equals(idUser)) {
-			throw new InexistentUserException();
+		if (users == null || !users.getIdUser().equalsIgnoreCase(idUser)) {
+			throw new UserDoesNotExistException();
 		}
 		UserWritable u;
 		u = (UserWritable) users;
@@ -39,9 +39,9 @@ public class homeAwayManagerClass implements homeAwayManager {
 	}
 
 	@Override
-	public void removeUser(String idUser) throws InexistentUserException, UserIsOwnerException {
-		if (!users.getIdUser().equals(idUser))
-			throw new InexistentUserException();
+	public void removeUser(String idUser) throws UserDoesNotExistException, UserIsOwnerException {
+		if (!users.getIdUser().equalsIgnoreCase(idUser))
+			throw new UserDoesNotExistException();
 		else if (users.isOwner())
 			throw new UserIsOwnerException();
 		
@@ -49,28 +49,28 @@ public class homeAwayManagerClass implements homeAwayManager {
 	}
 
 	@Override
-	public User getUserInformation(String idUser) throws InexistentUserException {
-		if (users == null || !users.getIdUser().equals(idUser))
-			throw new InexistentUserException();
+	public User getUserInformation(String idUser) throws UserDoesNotExistException {
+		if (users == null || !users.getIdUser().equalsIgnoreCase(idUser))
+			throw new UserDoesNotExistException();
 
 		return users;
 	}
 
 	public void addProperty(String idHome, String idUser, int price, int maxPersons, String local, String description,
-			String address) throws InvalidInformationException, InexistentUserException, PropertyAlreadyExistException {
+			String address) throws InvalidInformationException, UserDoesNotExistException, PropertyAlreadyExistException {
 		if(price<0 || maxPersons<0)
 			throw new InvalidInformationException();
-		else if(users == null || !users.getIdUser().equals(idUser))
-			throw new InexistentUserException();
-		else if(properties.getIdHome().equals(idHome))
+		else if(users == null || !users.getIdUser().equalsIgnoreCase(idUser))
+			throw new UserDoesNotExistException();
+		else if(properties.getIdHome().equalsIgnoreCase(idHome))
 			throw new PropertyAlreadyExistException();
 		
 		properties = new PropertyClass(idHome, users, price, maxPersons, local, description, address);
 	}
 	
-	public void removeProperty(String idHome) throws InexistentPropertyException, PropertyAlreadyVisitedException{
-		if(properties == null || !properties.getIdHome().equals(idHome))
-			throw new InexistentPropertyException();
+	public void removeProperty(String idHome) throws PropertyDoesNotExistException, PropertyAlreadyVisitedException{
+		if(properties == null || !properties.getIdHome().equalsIgnoreCase(idHome))
+			throw new PropertyDoesNotExistException();
 		else if(properties.getNumberOfvisits() != 0)
 			throw new PropertyAlreadyVisitedException();
 		
@@ -78,50 +78,50 @@ public class homeAwayManagerClass implements homeAwayManager {
 		
 	}
 
-	public Property getPropertyInformation(String idHome) throws InexistentPropertyException{
-		if(properties == null || !properties.getIdHome().equals(idHome))
-			throw new InexistentPropertyException();
+	public Property getPropertyInformation(String idHome) throws PropertyDoesNotExistException{
+		if(properties == null || !properties.getIdHome().equalsIgnoreCase(idHome))
+			throw new PropertyDoesNotExistException();
 		
 		return properties;
 	}
 	
 	public void addStayEvaluation(String idUser,String idHome,int points) throws InvalidInformationException,
-	InexistentUserException,InexistentPropertyException, UserIsOwnerException{//Listagem dentro user
+	UserDoesNotExistException,PropertyDoesNotExistException, TravellerIsOwnerException{                       //Listagem dentro user
 		if(points > 0)
 			throw new InvalidInformationException();
-		else if(users == null || !users.getIdUser().equals(idUser))
-			throw new InexistentUserException();
-		else if(properties == null || !properties.getIdHome().equals(idHome))
-			throw new InexistentPropertyException();
-		else if (properties.getOwner().getIdUser().equals(idUser))
-			throw new UserIsOwnerException();
+		else if(users == null || !users.getIdUser().equalsIgnoreCase(idUser))
+			throw new UserDoesNotExistException();
+		else if(properties == null || !properties.getIdHome().equalsIgnoreCase(idHome))
+			throw new PropertyDoesNotExistException();
+		else if (properties.getOwner().getIdUser().equalsIgnoreCase(idUser))
+			throw new TravellerIsOwnerException();
 		
 		((PropertyWritable)properties).evaluateStay(points,users);
 	}
 	
-	public void addStay(String idUser,String idHome) throws InexistentUserException,InexistentPropertyException,
-		UserIsNotOwnerException{
+	public void addStay(String idUser,String idHome) throws UserDoesNotExistException,PropertyDoesNotExistException,
+		TravellerIsNotOwnerException{
 
-		if(users == null || !users.getIdUser().equals(idUser))
-			throw new InexistentUserException();
-		else if(properties == null || !properties.getIdHome().equals(idHome))
-			throw new InexistentPropertyException();
-		else if (!properties.getOwner().getIdUser().equals(idUser))
-			throw new UserIsNotOwnerException();
+		if(users == null || !users.getIdUser().equalsIgnoreCase(idUser))
+			throw new UserDoesNotExistException();
+		else if(properties == null || !properties.getIdHome().equalsIgnoreCase(idHome))
+			throw new PropertyDoesNotExistException();
+		else if (!properties.getOwner().getIdUser().equalsIgnoreCase(idUser))
+			throw new TravellerIsNotOwnerException();
 		
 		((PropertyWritable)properties).stay(users);
 	}
 	
-	public Property listOwnerProperties(String idUser) throws InexistentUserException,UserIsNotOwnerException{
-		if(users == null || !users.getIdUser().equals(idUser))
-			throw new InexistentUserException();
+	public Property listOwnerProperties(String idUser) throws UserDoesNotExistException,UserIsNotOwnerException{
+		if(users == null || !users.getIdUser().equalsIgnoreCase(idUser))
+			throw new UserDoesNotExistException();
 		
 		return users.listProperties();
 	}
 	
-	public Iterator<Property> listStays(String idUser) throws InexistentUserException, UserIsNotTravellerException{
-		if(users == null || !users.getIdUser().equals(idUser))
-			throw new InexistentUserException();
+	public Iterator<Property> listStays(String idUser) throws UserDoesNotExistException, UserIsNotTravellerException{
+		if(users == null || !users.getIdUser().equalsIgnoreCase(idUser))
+			throw new UserDoesNotExistException();
 		if(!users.getStaysIterator().hasNext())
 			throw new UserIsNotTravellerException();
 		
@@ -131,14 +131,14 @@ public class homeAwayManagerClass implements homeAwayManager {
 	public Property searchProperty(int persons,String local) throws InvalidInformationException, NoSearchResultsException {
 		if(persons < 0)
 			throw new InvalidInformationException();
-		else if(properties.getMaxPersons() != persons || properties.getLocal().equals(local))
+		else if(properties.getMaxPersons() != persons || properties.getLocal().equalsIgnoreCase(local))
 			throw new NoSearchResultsException();
 		
 		return properties;
 	}
 	
 	public Property listBestProperty(String local) throws NoSearchResultsException {
-		if(properties == null || !properties.getLocal().equals(local))
+		if(properties == null || !properties.getLocal().equalsIgnoreCase(local))
 			throw new NoSearchResultsException();
 			return properties;
 	}

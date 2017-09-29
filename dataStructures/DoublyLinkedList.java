@@ -328,12 +328,12 @@ public class DoublyLinkedList<E> implements List<E>
     @SuppressWarnings("unused")
 	public void append( DoublyLinkedList<E> list )
     {
+    	if(list == null)
+    		return;
+    	
     	//Get Elements from list
     	DListNode<E> headList = list.head;
     	DListNode<E> tailList = list.tail;
-    	
-    	if(list == null)
-    		return;
     	
     	//Add elements from list to this
     	if(!this.isEmpty()) {

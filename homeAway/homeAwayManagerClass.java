@@ -40,7 +40,7 @@ public class homeAwayManagerClass implements homeAwayManager {
 
 	@Override
 	public void removeUser(String idUser) throws UserDoesNotExistException, UserIsOwnerException {
-		if (!users.getIdUser().equalsIgnoreCase(idUser))
+		if (users == null || !users.getIdUser().equalsIgnoreCase(idUser))
 			throw new UserDoesNotExistException();
 		else if (users.isOwner())
 			throw new UserIsOwnerException();
@@ -87,7 +87,7 @@ public class homeAwayManagerClass implements homeAwayManager {
 	
 	public void addStayEvaluation(String idUser,String idHome,int points) throws InvalidInformationException,
 	UserDoesNotExistException,PropertyDoesNotExistException, TravellerIsOwnerException{                       //Listagem dentro user
-		if(points > 0)
+		if(points < 0)
 			throw new InvalidInformationException();
 		else if(users == null || !users.getIdUser().equalsIgnoreCase(idUser))
 			throw new UserDoesNotExistException();
@@ -131,7 +131,7 @@ public class homeAwayManagerClass implements homeAwayManager {
 	public Property searchProperty(int persons,String local) throws InvalidInformationException, NoSearchResultsException {
 		if(persons < 0)
 			throw new InvalidInformationException();
-		else if(properties.getMaxPersons() != persons || properties.getLocal().equalsIgnoreCase(local))
+		else if(properties == null || (properties.getMaxPersons() != persons && properties.getLocal().equalsIgnoreCase(local)))
 			throw new NoSearchResultsException();
 		
 		return properties;

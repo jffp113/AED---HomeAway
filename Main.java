@@ -1,4 +1,10 @@
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Scanner;
 import dataStructures.Iterator;
 
@@ -27,6 +33,7 @@ import homeAway.homeAwayManagerClass;
  */
 public class Main {
 
+	
 	// COMANDS
 	public static final String ADD_USER = "IU";
 	public static final String CHANGE_USER_INFO = "UU";
@@ -68,6 +75,9 @@ public class Main {
 	public static final String INVALID_INFO = "Dados invalidos.";
 	public static final String NO_RESULTS = "Pesquisa nao devolveu resultados.";
 
+	//Other Constants
+	public static final String FILE = "database.bin";
+	
 	public static void main(String[] args) {
 		homeAwayManager hm = load();
 		Scanner in = new Scanner(System.in);
@@ -272,7 +282,7 @@ public class Main {
 		String idHome = in.next();
 		int points;
 		try {
-			if (in.hasNext()) {
+			if (in.hasNextInt()) {
 				points = in.nextInt(); in.nextLine();
 				hm.addStayEvaluation(idUser, idHome, points);
 				System.out.println(STAY_ADDED);
@@ -301,10 +311,8 @@ public class Main {
 			Property p = hm.listOwnerProperties(idUser);
 			System.out.printf(PROPERTY_SEARCH, p.getIdHome(), p.getDescription(), p.getAdress(), p.getLocal(),
 					p.getPrice(), p.getMaxPersons(), p.getPoints());
-
 		} catch (UserDoesNotExistException e) {
 			System.out.println(USER_DOES_NOT_EXIST);
-
 		} catch (UserIsNotOwnerException e) {
 			System.out.println(USER_IS_NOT_OWNER);
 		}
@@ -322,7 +330,6 @@ public class Main {
 			}
 		} catch (UserDoesNotExistException e) {
 			System.out.println(USER_DOES_NOT_EXIST);
-
 		} catch (UserIsNotTravellerException e) {
 			System.out.println(USER_IS_NOT_TRAVELLER);
 		}
@@ -357,12 +364,33 @@ public class Main {
 	}
 
 	private static void save(homeAwayManager hm) {
+		ObjectOutputStream o = null;
+		
+		try {
+			o = new ObjectOutputStream(new FileOutputStream(FILE));
+			o.writeObject(hm);
+			o.flush();
+			o.close();
+		} catch (IOException e) {	
+		}
+		
 		System.out.println(EXIT_MENSSAGE);
 		
 	}
 
 	private static homeAwayManager load() {
-
-		return new homeAwayManagerClass();
+		ObjectInputStream o = null;
+		homeAwayManager hm = null;
+		try {
+			o = new ObjectInputStream(new FileInputStream(FILE));
+			hm = ((homeAwayManager)o.readObject());
+			o.close();
+		} catch (FileNotFoundException e) {
+			hm = new homeAwayManagerClass();
+		} catch (IOException e) {
+		} catch (ClassNotFoundException e) {
+		}
+		
+		return hm;
 	}
 }

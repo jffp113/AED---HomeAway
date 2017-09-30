@@ -45,7 +45,8 @@ public class QueueInArray<E> implements Queue<E>
      * Creates a Queue on an array with capacity <code> capacity</code>
      * @param capacity - maximum capacity of the stack
      */
-    public QueueInArray( int capacity )
+    @SuppressWarnings("unchecked")
+	public QueueInArray( int capacity )
     {
         // Compiler gives a warning.
         array = (E[]) new Object[capacity];

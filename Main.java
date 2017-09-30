@@ -121,33 +121,6 @@ public class Main {
 	}
 
 	/**
-	 * Gets the rest of the line that include the arguments to start a command
-	 * 
-	 * @param in
-	 *            Scanner to read the next of the line
-	 * @return arguments as a Array of String
-	 */
-	private static String[] makeArgs(Scanner in) {
-		String fullArgs = in.nextLine().trim();
-		String tmp[] = new String[20];
-		String args[];
-		int numberOfArgs = 0, first = 0;
-
-		for (int i = 0; i < fullArgs.length(); i++) {
-			if (fullArgs.charAt(i) == ' ') {
-				tmp[numberOfArgs++] = fullArgs.substring(first, i).trim();
-				first = i;
-			}
-		}
-		tmp[numberOfArgs++] = fullArgs.substring(first).trim();
-		args = new String[numberOfArgs];
-		for (int i = 0; i < numberOfArgs; i++) {
-			args[i] = tmp[i];
-		}
-		return args;
-	}
-
-	/**
 	 * Get Command
 	 * 
 	 * @param in
@@ -168,17 +141,15 @@ public class Main {
 	 *            Top Class in order to execute the command
 	 */
 	private static void addUser(Scanner in, homeAwayManager hm) {
-		String[] args = makeArgs(in);
+		String idUser = in.next();
+		String email = in.next();
+		String phoneNumber = in.next();
+		String name = in.nextLine().trim();
 		String nacionality = in.nextLine();
 		String address = in.nextLine();
-		StringBuilder sb = new StringBuilder(args[3]);
-		
-		for(int i = 4; i < args.length; i++) {
-			sb.append(" " + args[i]);
-		}
 		
 		try {
-			hm.newUser(args[0], args[1], args[2], nacionality, address, sb.toString());
+			hm.newUser(idUser, email, phoneNumber, nacionality, address, name);
 			System.out.println(USER_ADDED);
 		} catch (UserAlreadyExistException e) {
 			System.out.println(USER_ALREADY_ADDED);
@@ -194,11 +165,13 @@ public class Main {
 	 *            Top Class in order to execute the command
 	 */
 	private static void changeUserInfo(Scanner in, homeAwayManager hm) {
-		String[] args = makeArgs(in);
+		String idUser = in.next();
+		String email = in.next();
+		String phoneNumber = in.nextLine().trim();
 		String address = in.nextLine();
 
 		try {
-			hm.changeUserInformation(args[0], args[1], args[2], address);
+			hm.changeUserInformation(idUser, email, phoneNumber, address);
 			System.out.println(USER_UPDATED);
 		} catch (UserDoesNotExistException e) {
 			System.out.println(USER_DOES_NOT_EXIST);
@@ -235,10 +208,10 @@ public class Main {
 	 *            Top Class in order to execute the command
 	 */
 	private static void getUserInfo(Scanner in, homeAwayManager hm) {
-		String[] args = makeArgs(in);
+		String idUser = in.nextLine().trim();
 		User user = null;
 		try {
-			user = hm.getUserInformation(args[0]);
+			user = hm.getUserInformation(idUser);
 			System.out.printf(USER_SEARCH_RESULT, user.getName(), user.getAddress(), user.getNacionality(),
 					user.getEmail(), user.getPhoneNumber());
 		} catch (UserDoesNotExistException e) {
@@ -255,13 +228,16 @@ public class Main {
 	 *            Top Class in order to execute the command
 	 */
 	private static void addProperty(Scanner in, homeAwayManager hm) {
-		String[] args = makeArgs(in);
+		String idHome = in.next();
+		String idUser = in.next();
+		int price = in.nextInt();
+		int people = in.nextInt();
+		String local = in.nextLine().trim();
 		String description = in.nextLine();
 		String address = in.nextLine();
 
 		try {
-			hm.addProperty(args[0], args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]), args[4], description,
-					address);
+			hm.addProperty(idHome, idUser, price, people, local, description,address);
 			System.out.println(PROPERTY_ADDED);
 		} catch (InvalidInformationException e) {
 			System.out.println(INVALID_INFO);
@@ -300,14 +276,16 @@ public class Main {
 	}
 
 	private static void addStay(Scanner in, homeAwayManager hm) {
-		String[] args = makeArgs(in);
+		String idUser = in.next();
+		String idHome = in.next();
+		int points;
 		try {
-			if (args.length == 3) {
-
-				hm.addStayEvaluation(args[0], args[1], Integer.parseInt(args[2]));
+			if (in.hasNext()) {
+				points = in.nextInt(); in.nextLine();
+				hm.addStayEvaluation(idUser, idHome, points);
 				System.out.println(STAY_ADDED);
 			} else {
-				hm.addStay(args[0], args[1]);
+				hm.addStay(idUser, idHome);
 				System.out.println(STAY_ADDED);
 			}
 		} catch (InvalidInformationException e) {
@@ -360,9 +338,10 @@ public class Main {
 	}
 
 	private static void searchProperty(Scanner in, homeAwayManager hm) {
-		String[] args = makeArgs(in);
+		int people = in.nextInt();
+		String local = in.nextLine().trim();
 		try {
-			Property p = hm.searchProperty(Integer.parseInt(args[0]), args[1]);
+			Property p = hm.searchProperty(people, local);
 			System.out.printf(PROPERTY_SEARCH, p.getIdHome(), p.getDescription(), p.getAdress(), p.getLocal(),
 					p.getPrice(), p.getMaxPersons(), p.getPoints());
 		} 

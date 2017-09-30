@@ -55,10 +55,10 @@ public class Main {
 	public static final String EXIT_MENSSAGE = "Gravado e terminado.";
 
 	// OUTPUT_ERROR
-	public static final String USER_ALREADY_ADDED = "Utilizador exitente.";
-	public static final String USER_DOES_NOT_EXIST = "Utilizador inexitente.";
-	public static final String USER_IS_OWNER = "Utilizador e propietario.";
-	public static final String USER_IS_NOT_OWNER = "Utilizador nao e propietario.";
+	public static final String USER_ALREADY_ADDED = "Utilizador existente.";
+	public static final String USER_DOES_NOT_EXIST = "Utilizador inexistente.";
+	public static final String USER_IS_OWNER = "Utilizador e proprietario.";
+	public static final String USER_IS_NOT_OWNER = "Utilizador nao e proprietario.";
 	public static final String USER_IS_NOT_TRAVELLER = "Utilizador nao viajou.";
 	public static final String PROPERTY_ALREADY_EXIST = "Propriedade existente.";
 	public static final String PROPERTY_DOES_NOT_EXIST = "Propriedade inexistente.";
@@ -171,9 +171,14 @@ public class Main {
 		String[] args = makeArgs(in);
 		String nacionality = in.nextLine();
 		String address = in.nextLine();
-
+		StringBuilder sb = new StringBuilder(args[3]);
+		
+		for(int i = 4; i < args.length; i++) {
+			sb.append(" " + args[i]);
+		}
+		
 		try {
-			hm.newUser(args[0], args[1], args[2], nacionality, address, args[3]);
+			hm.newUser(args[0], args[1], args[2], nacionality, address, sb.toString());
 			System.out.println(USER_ADDED);
 		} catch (UserAlreadyExistException e) {
 			System.out.println(USER_ALREADY_ADDED);

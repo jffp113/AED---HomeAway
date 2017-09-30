@@ -60,7 +60,7 @@ public class homeAwayManagerClass implements homeAwayManager {
 
 	public void addProperty(String idHome, String idUser, int price, int maxPersons, String local, String description,
 			String address) throws InvalidInformationException, UserDoesNotExistException, PropertyAlreadyExistException {
-		if(price<0 || maxPersons<0)
+		if(price<=0 || maxPersons<=0)
 			throw new InvalidInformationException();
 		else if(users == null || !users.getIdUser().equalsIgnoreCase(idUser))
 			throw new UserDoesNotExistException();

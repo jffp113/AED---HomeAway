@@ -52,7 +52,7 @@ public class Main {
 	public static final String PROPERTY_DESCRIPTION = "%s: %s, %s, %d, %d, %d, %s\n";
 	public static final String PROPERTY_SEARCH = "%s %s %s %s %d %d %d\n";
 	public static final String STAY_ADDED = "Estadia adicionada com sucesso.";
-	public static final String EXIT_MENSSAGE = "Gravado e terminado.";
+	public static final String EXIT_MENSSAGE = "Gravando e terminando...\n";
 
 	// OUTPUT_ERROR
 	public static final String USER_ALREADY_ADDED = "Utilizador existente.";
@@ -112,8 +112,11 @@ public class Main {
 			case LIST_BEST_PROPERTIES:
 				listBestProperties(in, hm);
 				break;
+			default:
+				
 			}
-			System.out.println();
+			if(!command.equalsIgnoreCase(EXIT))
+				System.out.println();
 		}
 		save(hm);
 		in.close();
@@ -123,8 +126,7 @@ public class Main {
 	/**
 	 * Get Command
 	 * 
-	 * @param in
-	 *            Scanner to get input
+	 * @param in Scanner to get input
 	 * @return command as a String
 	 */
 	private static String command(Scanner in) {
@@ -135,10 +137,8 @@ public class Main {
 	/**
 	 * Add user
 	 * 
-	 * @param in
-	 *            Scanner to receive additional arguments
-	 * @param hm
-	 *            Top Class in order to execute the command
+	 * @param in Scanner to receive additional arguments
+	 * @param hm Top Class in order to execute the command
 	 */
 	private static void addUser(Scanner in, homeAwayManager hm) {
 		String idUser = in.next();
@@ -159,10 +159,8 @@ public class Main {
 	/**
 	 * This method allows to change user information
 	 * 
-	 * @param in
-	 *            Scanner to receive additional arguments
-	 * @param hm
-	 *            Top Class in order to execute the command
+	 * @param in Scanner to receive additional arguments
+	 * @param hm Top Class in order to execute the command
 	 */
 	private static void changeUserInfo(Scanner in, homeAwayManager hm) {
 		String idUser = in.next();
@@ -181,10 +179,8 @@ public class Main {
 	/**
 	 * This method allows to remove users
 	 * 
-	 * @param in
-	 *            Scanner to receive additional arguments
-	 * @param hm
-	 *            Top Class in order to execute the command
+	 * @param in Scanner to receive additional arguments
+	 * @param hm  Top Class in order to execute the command
 	 */
 	private static void removeUser(Scanner in, homeAwayManager hm) {
 		String idUser = in.nextLine().trim();
@@ -202,10 +198,8 @@ public class Main {
 	/**
 	 * This method allows to get user Information
 	 * 
-	 * @param in
-	 *            Scanner to receive additional arguments
-	 * @param hm
-	 *            Top Class in order to execute the command
+	 * @param in Scanner to receive additional arguments
+	 * @param hm Top Class in order to execute the command
 	 */
 	private static void getUserInfo(Scanner in, homeAwayManager hm) {
 		String idUser = in.nextLine().trim();
@@ -222,10 +216,8 @@ public class Main {
 	/**
 	 * This method allows to add a new Property
 	 * 
-	 * @param in
-	 *            Scanner to receive additional arguments
-	 * @param hm
-	 *            Top Class in order to execute the command
+	 * @param in Scanner to receive additional arguments
+	 * @param hm Top Class in order to execute the command
 	 */
 	private static void addProperty(Scanner in, homeAwayManager hm) {
 		String idHome = in.next();
@@ -268,7 +260,7 @@ public class Main {
 		try {
 			p = hm.getPropertyInformation(idHome);
 			System.out.printf(PROPERTY_DESCRIPTION,p.getDescription(), p.getAdress(), p.getLocal(), p.getPrice(), p.getMaxPersons(),
-					p.getPoints(), p.getIdHome());
+					p.getPoints(), p.getOwner().getName());
 		} catch (PropertyDoesNotExistException e) {
 			System.out.println(PROPERTY_DOES_NOT_EXIST);
 

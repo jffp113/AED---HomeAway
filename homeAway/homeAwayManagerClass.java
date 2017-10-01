@@ -78,7 +78,7 @@ public class homeAwayManagerClass implements homeAwayManager {
 			throw new PropertyDoesNotExistException();
 		else if(properties.getNumberOfvisits() != 0)
 			throw new PropertyAlreadyVisitedException();
-		((UserWritable)properties.getOwner()).removeProperty();
+		((UserWritable)properties.getOwner()).removeProperty(idHome);
 		properties = null;
 		
 	}

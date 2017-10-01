@@ -124,7 +124,7 @@ public class homeAwayManagerClass implements homeAwayManager {
 		return users.listProperties();
 	}
 	
-	public Iterator<Property> listStays(String idUser) throws UserDoesNotExistException, UserIsNotTravellerException{
+	public Iterator<Stay> listStays(String idUser) throws UserDoesNotExistException, UserIsNotTravellerException{
 		if(users == null || !users.getIdUser().equalsIgnoreCase(idUser))
 			throw new UserDoesNotExistException();
 		if(!users.getStaysIterator().hasNext())

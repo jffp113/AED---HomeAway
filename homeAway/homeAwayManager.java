@@ -37,7 +37,7 @@ public interface homeAwayManager extends Serializable {
 	
 	public Property listOwnerProperties(String idUser) throws UserDoesNotExistException,UserIsNotOwnerException;
 	
-	public Iterator<Property> listStays(String idUser) throws UserDoesNotExistException, UserIsNotTravellerException;
+	public Iterator<Stay> listStays(String idUser) throws UserDoesNotExistException, UserIsNotTravellerException;
 	
 	public Property searchProperty(int persons,String local) throws InvalidInformationException, NoSearchResultsException;
 	

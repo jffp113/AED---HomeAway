@@ -82,14 +82,14 @@ public class PropertyClass implements PropertyWritable {
 	@Override
 	public void evaluateStay(int points,User users) {
 		this.points += points; 
+		((UserWritable)users).addStay(this, points);
 		
-		this.stay(users);
 	}
 
 	@Override
 	public void stay(User users) {
-		((UserWritable)users).addStay(this);
-		this.numberVisits++;
+		((UserWritable)users).addStay(this, 0);
+		
 	}
 
 }

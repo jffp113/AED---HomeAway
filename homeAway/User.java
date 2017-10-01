@@ -28,5 +28,7 @@ public interface User extends Serializable{
 	
 	public int getNumberProperties();
 	
-	public Iterator<Property> getStaysIterator(); // access on main ?
+	public Iterator<Stay> getStaysIterator(); // access on main ?
+	
+	
 }

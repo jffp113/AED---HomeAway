@@ -9,6 +9,7 @@ import java.util.Scanner;
 import dataStructures.Iterator;
 
 import homeAway.PropertyDoesNotExistException;
+import homeAway.Stay;
 import homeAway.TravellerIsNotOwnerException;
 import homeAway.TravellerIsOwnerException;
 import homeAway.UserDoesNotExistException;
@@ -321,12 +322,15 @@ public class Main {
 	private static void listTravellerStays(Scanner in, homeAwayManager hm) {
 		String idUser = in.nextLine().trim();
 		try {
-			Iterator<Property> ip = hm.listStays(idUser);
+			Iterator<Stay> ip = hm.listStays(idUser);
+			Stay s;
 			Property p;
+			
 			while (ip.hasNext()) {
-				p = ip.next();
+				s = ip.next();
+				p = s.getProperty();
 				System.out.printf(PROPERTY_SEARCH, p.getIdHome(), p.getDescription(), p.getAdress(), p.getLocal(),
-						p.getPrice(), p.getMaxPersons(), p.getPoints());
+						p.getPrice(), p.getMaxPersons(), s.getPoints());
 			}
 		} catch (UserDoesNotExistException e) {
 			System.out.println(USER_DOES_NOT_EXIST);

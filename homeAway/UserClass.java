@@ -21,7 +21,7 @@ public class UserClass implements UserWritable{
 	private Property properties;
 	private int numberProperties;
 	
-	private List<Property> stays;
+	private List<Stay> stays;
 	
 	//Constructor
 	public UserClass(String idUser, String email, String phoneNumber,
@@ -34,7 +34,7 @@ public class UserClass implements UserWritable{
 		this.name = name;
 		this.numberProperties = 0;
 		
-		stays = new DoublyLinkedList<Property>();
+		stays = new DoublyLinkedList<Stay>();
 		properties = null;
 	}
 	
@@ -109,13 +109,13 @@ public class UserClass implements UserWritable{
 	}
 
 	@Override
-	public void addStay(Property property) {
-		stays.addLast(property);
+	public void addStay(Property property, int points) {
+		stays.addFirst(new StayClass(property, points)); 
 	}
 
 
 	@Override
-	public Iterator<Property> getStaysIterator() {
+	public Iterator<Stay> getStaysIterator() {
 		return stays.iterator();
 	}
 
@@ -127,3 +127,5 @@ public class UserClass implements UserWritable{
 	}
 	
 }
+	
+

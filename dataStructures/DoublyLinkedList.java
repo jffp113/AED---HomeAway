@@ -325,8 +325,7 @@ public class DoublyLinkedList<E> implements List<E>
      * inserts them at the end of the list (in proper sequence).
      * @param list - list to be appended to the end of this
      */
-    @SuppressWarnings("unused")
-	public void append( DoublyLinkedList<E> list )
+    public void append( DoublyLinkedList<E> list )
     {
     	if(list == null)
     		return;

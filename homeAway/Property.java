@@ -23,8 +23,10 @@ public interface Property extends Serializable{
 	 User getOwner();
 	  
 	 int getPoints();
-
+	 
 	 int getNumberOfvisits();
+
+	 
 	 
 	 
 }

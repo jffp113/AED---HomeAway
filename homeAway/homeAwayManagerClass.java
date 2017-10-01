@@ -101,7 +101,8 @@ public class homeAwayManagerClass implements homeAwayManager {
 		else if (properties.getOwner().getIdUser().equalsIgnoreCase(idUser))
 			throw new TravellerIsOwnerException();
 		
-		((PropertyWritable)properties).evaluateStay(points,users);
+		((PropertyWritable)properties).evaluateStay(points);
+		((UserWritable)users).addStay(properties, points);
 	}
 	
 	public void addStay(String idUser,String idHome) throws UserDoesNotExistException,PropertyDoesNotExistException,
@@ -114,7 +115,8 @@ public class homeAwayManagerClass implements homeAwayManager {
 		else if (!properties.getOwner().getIdUser().equalsIgnoreCase(idUser))
 			throw new TravellerIsNotOwnerException();
 		
-		((PropertyWritable)properties).stay(users);
+		((UserWritable)users).addStay(properties, 0);
+		((PropertyWritable)properties).addStay();
 	}
 	
 	public Property listOwnerProperties(String idUser) throws UserDoesNotExistException,UserIsNotOwnerException{

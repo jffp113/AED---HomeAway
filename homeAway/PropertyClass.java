@@ -13,7 +13,8 @@ public class PropertyClass implements PropertyWritable {
 	private int price;
 	private int maxPersons;
 	private int points;
-	private int numberVisits;
+	private int Visits;
+	
 	
 	//Constructor
 	public PropertyClass(String idHome, User idUser, int price, int maxPersons, String local, String description,
@@ -75,21 +76,25 @@ public class PropertyClass implements PropertyWritable {
 	}
 
 	@Override
-	public int getNumberOfvisits() {
-		return this.numberVisits;
-	}
-
-	@Override
-	public void evaluateStay(int points,User users) {
+	public void evaluateStay(int points) {
 		this.points += points; 
-		((UserWritable)users).addStay(this, points);
+		addStay();
 		
 	}
 
 	@Override
-	public void stay(User users) {
-		((UserWritable)users).addStay(this, 0);
+	public void addStay() {
+		this.Visits++;
 		
 	}
+
+	@Override
+	public int getNumberOfvisits() {
+		return Visits;
+	}
+
+	
+
+	
 
 }

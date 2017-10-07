@@ -5,6 +5,7 @@ import java.io.Serializable;
 import dataStructures.Iterator;
 
 /**
+ * This is the top Class of the HomeAway Project
  * @author Jorge Pereira (49771) jff.pereira@campus.fct.unl.pt 
  * @author Tiago Fornelos (49780) t.fornelos@campus.fct.unl.pt
  */

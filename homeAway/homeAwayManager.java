@@ -9,7 +9,7 @@ import dataStructures.Iterator;
  * @author Jorge Pereira (49771) jff.pereira@campus.fct.unl.pt 
  * @author Tiago Fornelos (49780) t.fornelos@campus.fct.unl.pt
  */
-public interface homeAwayManager extends Serializable {
+public interface HomeAwayManager extends Serializable {
 	
 	/**
 	 * Add's a new user to the database

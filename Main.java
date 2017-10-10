@@ -23,12 +23,13 @@ import homeAway.UserAlreadyExistException;
 import homeAway.UserIsNotOwnerException;
 import homeAway.UserIsNotTravellerException;
 import homeAway.UserIsOwnerException;
-import homeAway.homeAwayManager;
-import homeAway.homeAwayManagerClass;
+import homeAway.HomeAwayManager;
+import homeAway.HomeAwayManagerClass;
 
 /**
  * Main Class
- * 
+ * This Class will be the point of contact between the user and
+ * the Program
  * @author Jorge Pereira (49771) jff.pereira@campus.fct.unl.pt
  * @author Tiago Fornelos (49780) t.fornelos@campus.fct.unl.pt
  */
@@ -80,7 +81,7 @@ public class Main {
 	public static final String FILE = "database.bin";
 	
 	public static void main(String[] args) {
-		homeAwayManager hm = load();
+		HomeAwayManager hm = load();
 		Scanner in = new Scanner(System.in);
 		String command = "";
 
@@ -151,7 +152,7 @@ public class Main {
 	 * @param in Scanner to receive additional arguments
 	 * @param hm Top Class in order to execute the command
 	 */
-	private static void addUser(Scanner in, homeAwayManager hm) {
+	private static void addUser(Scanner in, HomeAwayManager hm) {
 		String idUser = in.next();
 		String email = in.next();
 		String phoneNumber = in.next();
@@ -173,7 +174,7 @@ public class Main {
 	 * @param in Scanner to receive additional arguments
 	 * @param hm Top Class in order to execute the command
 	 */
-	private static void changeUserInfo(Scanner in, homeAwayManager hm) {
+	private static void changeUserInfo(Scanner in, HomeAwayManager hm) {
 		String idUser = in.next();
 		String email = in.next();
 		String phoneNumber = in.nextLine().trim();
@@ -193,7 +194,7 @@ public class Main {
 	 * @param in Scanner to receive additional arguments
 	 * @param hm  Top Class in order to execute the command
 	 */
-	private static void removeUser(Scanner in, homeAwayManager hm) {
+	private static void removeUser(Scanner in, HomeAwayManager hm) {
 		String idUser = in.nextLine().trim();
 
 		try {
@@ -212,7 +213,7 @@ public class Main {
 	 * @param in Scanner to receive additional arguments
 	 * @param hm Top Class in order to execute the command
 	 */
-	private static void getUserInfo(Scanner in, homeAwayManager hm) {
+	private static void getUserInfo(Scanner in, HomeAwayManager hm) {
 		String idUser = in.nextLine().trim();
 		User user = null;
 		try {
@@ -230,7 +231,7 @@ public class Main {
 	 * @param in Scanner to receive additional arguments
 	 * @param hm Top Class in order to execute the command
 	 */
-	private static void addProperty(Scanner in, homeAwayManager hm) {
+	private static void addProperty(Scanner in, HomeAwayManager hm) {
 		String idHome = in.next();
 		String idUser = in.next();
 		int price = in.nextInt();
@@ -251,7 +252,12 @@ public class Main {
 		}
 	}
 
-	private static void removeProperty(Scanner in, homeAwayManager hm) {
+	/**
+	 * This method allows to remove a property
+	 * @param in Scanner
+	 * @param hm homeAwayManager
+	 */
+	private static void removeProperty(Scanner in, HomeAwayManager hm) {
 		String idHome = in.nextLine().trim();
 		try {
 			hm.removeProperty(idHome);
@@ -265,7 +271,12 @@ public class Main {
 
 	}
 
-	private static void getPropertyInfo(Scanner in, homeAwayManager hm) {
+	/**
+	 * This method allows to get a certain Property Information
+	 * @param in Scanner
+	 * @param hm homeAwayManager
+	 */
+	private static void getPropertyInfo(Scanner in, HomeAwayManager hm) {
 		String idHome = in.nextLine().trim();
 		Property p;
 		try {
@@ -278,7 +289,12 @@ public class Main {
 		}
 	}
 
-	private static void addStay(Scanner in, homeAwayManager hm) {
+	/**
+	 * ~This method allows to add a Stay to a certain user
+	 * @param in Scanner
+	 * @param hm homeAwayManager
+	 */
+	private static void addStay(Scanner in, HomeAwayManager hm) {
 		String idUser = in.next();
 		String idHome = in.next();
 		int points;
@@ -306,7 +322,12 @@ public class Main {
 
 	}
 
-	private static void listOwnerProperties(Scanner in, homeAwayManager hm) {
+	/**
+	 * This method allows to list Owner Properties
+	 * @param in Scanner
+	 * @param hm homeAwayManager
+	 */
+	private static void listOwnerProperties(Scanner in, HomeAwayManager hm) {
 		String idUser = in.nextLine().trim();
 		try {
 			Property p = hm.listOwnerProperties(idUser);
@@ -319,7 +340,12 @@ public class Main {
 		}
 	}
 
-	private static void listTravellerStays(Scanner in, homeAwayManager hm) {
+	/**
+	 * This method allows to list user stays
+	 * @param in Scanner
+	 * @param hm homeAwayManager
+	 */
+	private static void listTravellerStays(Scanner in, HomeAwayManager hm) {
 		String idUser = in.nextLine().trim();
 		try {
 			Iterator<Stay> ip = hm.listStays(idUser);
@@ -340,7 +366,12 @@ public class Main {
 
 	}
 
-	private static void searchProperty(Scanner in, homeAwayManager hm) {
+	/**
+	 * This method allows to search Properties
+	 * @param in Scanner
+	 * @param hm HomeAwayManager
+	 */
+	private static void searchProperty(Scanner in, HomeAwayManager hm) {
 		int people = in.nextInt();
 		String local = in.nextLine().trim();
 		try {
@@ -356,7 +387,12 @@ public class Main {
 
 	}
 
-	private static void listBestProperties(Scanner in, homeAwayManager hm) {
+	/**
+	 * This method allows to list best properties by points
+	 * @param in Scanner
+	 * @param hm HomeAwayManager
+	 */
+	private static void listBestProperties(Scanner in, HomeAwayManager hm) {
 		String local = in.nextLine().trim();
 		try {
 			Property p = hm.listBestProperty(local);
@@ -367,7 +403,11 @@ public class Main {
 		}
 	}
 
-	private static void save(homeAwayManager hm) {
+	/**
+	 * This method saves the current state of the executing program
+	 * @param hm HomeAwayManager to be saved
+	 */
+	private static void save(HomeAwayManager hm) {
 		ObjectOutputStream o = null;
 		
 		try {
@@ -382,15 +422,20 @@ public class Main {
 		
 	}
 
-	private static homeAwayManager load() {
+	/**
+	 * This method allows to load the previous state of the HomeAwayManager
+	 * If there isn't a previous state it will create a blank one
+	 * @return HomeAwayManager 
+	 */
+	private static HomeAwayManager load() {
 		ObjectInputStream o = null;
-		homeAwayManager hm = null;
+		HomeAwayManager hm = null;
 		try {
 			o = new ObjectInputStream(new FileInputStream(FILE));
-			hm = ((homeAwayManager)o.readObject());
+			hm = ((HomeAwayManager)o.readObject());
 			o.close();
 		} catch (FileNotFoundException e) {
-			hm = new homeAwayManagerClass();
+			hm = new HomeAwayManagerClass();
 		} catch (IOException e) {
 		} catch (ClassNotFoundException e) {
 		}

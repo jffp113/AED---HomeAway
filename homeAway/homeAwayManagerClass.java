@@ -2,7 +2,7 @@ package homeAway;
 
 import dataStructures.Iterator;
 
-public class homeAwayManagerClass implements homeAwayManager {
+public class HomeAwayManagerClass implements HomeAwayManager {
 	// Constants
 
 	private static final long serialVersionUID = 0L;

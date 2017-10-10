@@ -6,8 +6,6 @@ package homeAway;
  * 
  * Exception that tells when user input does not contain valid information
  */
-
-
 public class InvalidInformationException extends Exception {
 
 	private static final long serialVersionUID = 0L;

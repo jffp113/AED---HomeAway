@@ -7,7 +7,7 @@ package homeAway;
  * Exception that tells that a certain Property already exist in the system
  */
 
-public class PropertyAlreadyExistException extends Exception {
+public class PropertyAlreadyExistException extends RuntimeException {
 
 	private static final long serialVersionUID = 0L;
 

@@ -6,7 +6,7 @@ package homeAway;
  * 
  * Exception that tells if a Property was visited
  */
-public class PropertyAlreadyVisitedException extends Exception {
+public class PropertyAlreadyVisitedException extends RuntimeException {
 
 	private static final long serialVersionUID = 0L;
 

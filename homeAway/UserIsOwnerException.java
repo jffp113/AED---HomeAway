@@ -6,7 +6,7 @@ package homeAway;
  * 
  * 	Exception that tells when a User is owner of a property
  */
-public class UserIsOwnerException extends Exception {
+public class UserIsOwnerException extends RuntimeException {
 
 	private static final long serialVersionUID = 0L;
 

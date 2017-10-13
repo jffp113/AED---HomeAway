@@ -7,7 +7,7 @@ package homeAway;
  * Exception that tells that a User is already on the system
  */
 
-public class UserAlreadyExistException extends Exception {
+public class UserAlreadyExistException extends RuntimeException {
 
 	private static final long serialVersionUID = 0L;
 	

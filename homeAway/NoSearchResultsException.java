@@ -6,7 +6,7 @@ package homeAway;
  * 
  * Exception that tells when there isn't a result for a certain search request
  */
-public class NoSearchResultsException extends Exception {
+public class NoSearchResultsException extends RuntimeException {
 
 	private static final long serialVersionUID = 0L;
 

@@ -7,7 +7,7 @@ package homeAway;
  * Exception that tells when a user is not a traveller
  * (User never stayed on a Property)
  */
-public class UserIsNotTravellerException extends Exception {
+public class UserIsNotTravellerException extends RuntimeException {
 
 	private static final long serialVersionUID = 0L;
 

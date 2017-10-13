@@ -6,7 +6,7 @@ package homeAway;
  * 
  * Exception that tells when a user is not owner of a property
  */
-public class TravellerIsNotOwnerException extends Exception{
+public class TravellerIsNotOwnerException extends RuntimeException{
 
 	private static final long serialVersionUID = 0L;
 

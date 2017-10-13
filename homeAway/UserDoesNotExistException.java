@@ -7,7 +7,7 @@ package homeAway;
  * Exception that tells that a user does not exist on the system
  */
 
-public class UserDoesNotExistException extends Exception{
+public class UserDoesNotExistException extends RuntimeException{
 
 	private static final long serialVersionUID = 0L;
 

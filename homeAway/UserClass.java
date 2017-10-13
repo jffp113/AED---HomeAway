@@ -1,8 +1,8 @@
 package homeAway;
 
-import dataStructures.DoublyLinkedList;
 import dataStructures.Iterator;
-import dataStructures.List;
+import dataStructures.StackIterable;
+import dataStructures.StackIterator;
 
 /**
  * The User class represents a User in the database containing various
@@ -27,7 +27,7 @@ public class UserClass implements UserWritable{
 	private Property properties;
 	private int numberProperties;
 	
-	private List<Stay> stays;
+	private StackIterator<Stay> stays;
 	
 	//Constructor
 	public UserClass(String idUser, String email, String phoneNumber,
@@ -40,7 +40,7 @@ public class UserClass implements UserWritable{
 		this.name = name;
 		this.numberProperties = 0;
 		
-		stays = new DoublyLinkedList<Stay>();
+		stays = new StackIterable<Stay>();
 		properties = null;
 	}
 	
@@ -116,7 +116,7 @@ public class UserClass implements UserWritable{
 
 	@Override
 	public void addStay(Property property, int points) {
-		stays.addFirst(new StayClass(property, points)); 
+		stays.push(new StayClass(property, points)); 
 	}
 
 

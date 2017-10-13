@@ -5,7 +5,7 @@ package homeAway;
  * 
  * Exception says that a property does not exist
  */
-public class PropertyDoesNotExistException extends Exception {
+public class PropertyDoesNotExistException extends RuntimeException {
 
 	private static final long serialVersionUID = 0L;
 

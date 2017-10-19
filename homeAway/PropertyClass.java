@@ -1,6 +1,6 @@
 package homeAway;
 
-public class PropertyClass implements PropertyWritable {
+class PropertyClass implements PropertyWritable {
 	//Constants
 	private static final long serialVersionUID = 0L;
 	

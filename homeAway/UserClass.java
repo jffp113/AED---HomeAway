@@ -1,8 +1,8 @@
 package homeAway;
 
 import dataStructures.Iterator;
-import dataStructures.StackIterable;
-import dataStructures.StackIterator;
+import dataStructures.IterableStackInList;
+import dataStructures.IterableStack;
 
 /**
  * The User class represents a User in the database containing various
@@ -10,7 +10,7 @@ import dataStructures.StackIterator;
  * @author Jorge Pereira (49771) jff.pereira@campus.fct.unl.pt 
  * @author Tiago Fornelos (49780) t.fornelos@campus.fct.unl.pt
  */
-public class UserClass implements UserWritable{
+class UserClass implements UserWritable{
 	//Constants
 	
 	private static final long serialVersionUID = 0L;
@@ -27,7 +27,7 @@ public class UserClass implements UserWritable{
 	private Property properties;
 	private int numberProperties;
 	
-	private StackIterator<Stay> stays;
+	private IterableStack<Stay> stays;
 	
 	//Constructor
 	public UserClass(String idUser, String email, String phoneNumber,
@@ -40,7 +40,7 @@ public class UserClass implements UserWritable{
 		this.name = name;
 		this.numberProperties = 0;
 		
-		stays = new StackIterable<Stay>();
+		stays = new IterableStackInList<Stay>();
 		properties = null;
 	}
 	

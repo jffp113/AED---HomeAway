@@ -6,11 +6,11 @@ package dataStructures;
  * 
  * Stack Iterator, adds the a method so that the queue can be iterated
  */
-public class StackIterable<E> extends StackInList<E> implements StackIterator<E> {
+public class IterableStackInList<E> extends StackInList<E> implements IterableStack<E> {
 
 	private static final long serialVersionUID = 1L;
 
-	public StackIterable() {
+	public IterableStackInList() {
 		super();
 	}
 

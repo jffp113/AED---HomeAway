@@ -6,6 +6,6 @@ package dataStructures;
  * 
  * Stack with Iterator
  */
-public interface StackIterator<E> extends Stack<E> {
+public interface IterableStack<E> extends Stack<E> {
 	public Iterator<E> iterator();
 }

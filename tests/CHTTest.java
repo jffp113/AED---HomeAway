@@ -9,7 +9,7 @@ import dataStructures.*;
 
 public class CHTTest {
 
-	@Test
+	@Test(timeout = 300)
 	public void insertTest() {
 		Dictionary<Integer, Integer> cht = new ChainedHashTable<Integer, Integer>();
 
@@ -45,7 +45,7 @@ public class CHTTest {
 		assertFalse(itEntries.hasNext());
 	}
 	
-	@Test
+	@Test(timeout = 300)
 	public void insertRandomTest() {
 		Dictionary<Integer, Integer> cht = new ChainedHashTable<Integer, Integer>(20);
 		
@@ -61,7 +61,7 @@ public class CHTTest {
 		assertEquals(cht.size(),counter);	
 	}
 	
-	@Test
+	@Test(timeout = 300)
 	public void findTest() {
 		Dictionary<Integer, Integer> cht = new ChainedHashTable<Integer, Integer>();
 		assertTrue(cht.isEmpty());
@@ -111,7 +111,7 @@ public class CHTTest {
 		assertTrue(itEntries.next().getKey() == 10);
 		assertFalse(itEntries.hasNext());
 	}
-		@Test
+		@Test(timeout = 300)
 		public void removeTest() {
 			Dictionary<Integer, Integer> cht = new ChainedHashTable<Integer, Integer>();
 

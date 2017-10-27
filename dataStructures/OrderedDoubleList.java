@@ -10,7 +10,7 @@ public class OrderedDoubleList<K extends Comparable<K>,V> implements OrderedDict
 	//Constants
 	
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 0L;
 	
 	//Variables
 	protected DListNode<Entry<K,V>> head;
@@ -79,7 +79,7 @@ public class OrderedDoubleList<K extends Comparable<K>,V> implements OrderedDict
 		DListNode<Entry<K,V>> s = searchSpot(key);
 		DListNode<Entry<K,V>> node;
 		
-		if(s.getElement().getKey().compareTo(key) == 0) {//If the key is present substitute with new vaule
+		if(s.getElement().getKey().compareTo(key) == 0) {//If the key is present substitute with new valeu
 			oldV = s.getElement().getValue();
 			s.setElement(new EntryClass<K,V>(key,value));
 		}
@@ -117,8 +117,8 @@ public class OrderedDoubleList<K extends Comparable<K>,V> implements OrderedDict
 	public V insert(K key, V value) {
 		V oldV = null;
 		
-		if(currentSize == 0 || head.getElement().getKey().compareTo(key) >= 1)//if there are no elements
-			insertFirst(key,value);
+		if(currentSize == 0 || head.getElement().getKey().compareTo(key) >= 1)//if there are no elements or the first key is smaller than
+			insertFirst(key,value);								//the key of element we need to enter
 		else if(tail.getElement().getKey().compareTo(key) <= -1)//if key is higher that
 			insertLast(key, value);
 		else 													//if the element must be in the middle
@@ -201,13 +201,19 @@ public class OrderedDoubleList<K extends Comparable<K>,V> implements OrderedDict
 
 
 	@Override
-	public Entry<K, V> minEntry() {
+	public Entry<K, V> minEntry() throws EmptyDictionaryException {
+		if(this.isEmpty())
+			throw new EmptyDictionaryException();
+		
 		return head.getElement();
 	}
 
 
 	@Override
-	public Entry<K, V> maxEntry() {
+	public Entry<K, V> maxEntry() throws EmptyDictionaryException {
+		if(this.isEmpty())
+			throw new EmptyDictionaryException();
+		
 		return  tail.getElement();
 	}
 }

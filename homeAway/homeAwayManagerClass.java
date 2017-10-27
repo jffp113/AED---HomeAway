@@ -29,7 +29,7 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 			throw new UserAlreadyExistException();
 		
 		user = new UserClass(idUser, email, phoneNumber, nacionality, address, name);
-		users.insert(idUser, user);
+		users.insert(idUser.toLowerCase(), user);
 	}
 
 	@Override

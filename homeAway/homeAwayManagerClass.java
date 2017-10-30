@@ -7,17 +7,21 @@ import dataStructures.Iterator;
 public class HomeAwayManagerClass implements HomeAwayManager {
 	// Constants
 	private static final int NUMBER_USER = 15000;
+	private static final int NUMBER_PROPERTIES = 7500;
 
 	private static final long serialVersionUID = 0L;
 
 	// Variables
-	// private User users;
-	private Property properties;
+	//private Property properties;
+	private Dictionary<String, PropertyWritable> properties;
 	private Dictionary<String, UserWritable> users;
-
+	private Dictionary<String,PropertyWritable> localProperties;
+	
 	// Constructor
 	public HomeAwayManagerClass() {
 		users = new ChainedHashTable<String, UserWritable>(NUMBER_USER);
+		properties = new ChainedHashTable<String, PropertyWritable>(NUMBER_PROPERTIES);
+		localProperties = new ChainedHashTable<String, PropertyWritable>(NUMBER_PROPERTIES);
 	}
 
 	@Override
@@ -62,73 +66,85 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 		if (user == null)
 			throw new UserDoesNotExistException();
 
-		return (User) user;
+		return user;
 	}
 
 	public void addProperty(String idHome, String idUser, int price, int maxPersons, String local, String description,
-			String address)
-			throws InvalidInformationException, UserDoesNotExistException, PropertyAlreadyExistException {
+			String address) throws InvalidInformationException, UserDoesNotExistException, PropertyAlreadyExistException {
+		
 		UserWritable user = users.find(idUser.toLowerCase());
+		PropertyWritable property = properties.find(idHome.toLowerCase());
+		
 		if (price <= 0 || maxPersons <= 0 || maxPersons > 20)
 			throw new InvalidInformationException();
 		else if (user == null)
 			throw new UserDoesNotExistException();
-		else if (properties != null && properties.getIdHome().equalsIgnoreCase(idHome))
+		else if (property != null)
 			throw new PropertyAlreadyExistException();
 
-		properties = new PropertyClass(idHome, user, price, maxPersons, local, description, address);
-		user.addNewProperty(properties);
+		property = new PropertyClass(idHome, user, price, maxPersons, local, description, address);
+		properties.insert(idHome.toLowerCase(), property);
+		localProperties.insert(local.toLowerCase(), property);
+		user.addNewProperty(property);
 	}
 
 	public void removeProperty(String idHome) throws PropertyDoesNotExistException, PropertyAlreadyVisitedException {
-
-		if (properties == null || !properties.getIdHome().equalsIgnoreCase(idHome))
+		PropertyWritable property = properties.find(idHome.toLowerCase());
+		
+		if (property == null)
 			throw new PropertyDoesNotExistException();
-		else if (properties.getNumberOfvisits() != 0)
+		else if (property.getNumberOfvisits() != 0)
 			throw new PropertyAlreadyVisitedException();
-		((UserWritable) properties.getOwner()).removeProperty(idHome);
-		properties = null;
+		
+		((UserWritable)property.getOwner()).removeProperty(idHome);
+		localProperties.remove(property.getIdHome().toLowerCase());
+		properties.remove(idHome.toLowerCase());
 
 	}
 
 	public Property getPropertyInformation(String idHome) throws PropertyDoesNotExistException {
-		if (properties == null || !properties.getIdHome().equalsIgnoreCase(idHome))
+		PropertyWritable property = properties.find(idHome.toLowerCase());
+
+		if (property == null)
 			throw new PropertyDoesNotExistException();
 
-		return properties;
+		return property;
 	}
 
 	public void addStayEvaluation(String idUser, String idHome, int points) throws InvalidInformationException,
 			UserDoesNotExistException, PropertyDoesNotExistException, TravellerIsOwnerException { // Listagem dentro
 																									// user
 		UserWritable user = users.find(idUser.toLowerCase());
-
+		PropertyWritable property = properties.find(idHome.toLowerCase());
+		
 		if (points < 0)
 			throw new InvalidInformationException();
 		else if (user == null)
 			throw new UserDoesNotExistException();
-		else if (properties == null || !properties.getIdHome().equalsIgnoreCase(idHome))
+		else if (property == null)
 			throw new PropertyDoesNotExistException();
-		else if (properties.getOwner().getIdUser().equalsIgnoreCase(idUser))
+		else if (property.getOwner().getIdUser().equalsIgnoreCase(idUser))
 			throw new TravellerIsOwnerException();
 
-		((PropertyWritable) properties).evaluateStay(points);
-		user.addStay(properties, points);
+		property.evaluateStay(points);
+		user.addStay(property, points);
 	}
 
 	public void addStay(String idUser, String idHome)
 			throws UserDoesNotExistException, PropertyDoesNotExistException, TravellerIsNotOwnerException {
+		
 		UserWritable user = users.find(idUser.toLowerCase());
-
+		PropertyWritable property = properties.find(idHome.toLowerCase());
+		
 		if (user == null)
 			throw new UserDoesNotExistException();
-		else if (properties == null || !properties.getIdHome().equalsIgnoreCase(idHome))
+		else if (property == null)
 			throw new PropertyDoesNotExistException();
-		else if (!properties.getOwner().getIdUser().equalsIgnoreCase(idUser))
+		else if (property.getOwner() != user)
 			throw new TravellerIsNotOwnerException();
 
-		user.addStay(properties, 0);
-		((PropertyWritable) properties).addStay();
+		user.addStay(property, 0);
+		property.addStay();
 	}
 
 	public Property listOwnerProperties(String idUser) throws UserDoesNotExistException, UserIsNotOwnerException {
@@ -152,18 +168,22 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 
 	public Property searchProperty(int persons, String local)
 			throws InvalidInformationException, NoSearchResultsException {
+		
+		PropertyWritable property = localProperties.find(local.toLowerCase());
+		
 		if (persons <= 0 || persons > 20)
 			throw new InvalidInformationException();
-		else if (properties == null || properties.getMaxPersons() < persons
-				|| !properties.getLocal().equalsIgnoreCase(local))
+		else if (property == null || property.getMaxPersons() < persons
+				|| !property.getLocal().equalsIgnoreCase(local))
 			throw new NoSearchResultsException();
 
-		return properties;
+		return property;
 	}
 
 	public Property listBestProperty(String local) throws NoSearchResultsException {
-		if (properties == null || !properties.getLocal().equalsIgnoreCase(local))
+		PropertyWritable property = localProperties.find(local.toLowerCase());
+		if (property == null)
 			throw new NoSearchResultsException();
-		return properties;
+		return property;
 	}
 }

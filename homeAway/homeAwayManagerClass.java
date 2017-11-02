@@ -97,7 +97,7 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 			throw new PropertyAlreadyVisitedException();
 		
 		((UserWritable)property.getOwner()).removeProperty(idHome);
-		localProperties.remove(property.getIdHome().toLowerCase());
+		localProperties.remove(property.getLocal().toLowerCase());
 		properties.remove(idHome.toLowerCase());
 
 	}
@@ -168,13 +168,11 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 
 	public Property searchProperty(int persons, String local)
 			throws InvalidInformationException, NoSearchResultsException {
-		
 		PropertyWritable property = localProperties.find(local.toLowerCase());
-		
+
 		if (persons <= 0 || persons > 20)
 			throw new InvalidInformationException();
-		else if (property == null || property.getMaxPersons() < persons
-				|| !property.getLocal().equalsIgnoreCase(local))
+		else if (property == null || property.getMaxPersons() < persons )
 			throw new NoSearchResultsException();
 
 		return property;

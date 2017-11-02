@@ -356,7 +356,7 @@ public class Main {
 				s = ip.next();
 				p = s.getProperty();
 				System.out.printf(PROPERTY_SEARCH, p.getIdHome(), p.getDescription(), p.getAdress(), p.getLocal(),
-						p.getPrice(), p.getMaxPersons(), s.getPoints());
+						p.getPrice(), p.getMaxPersons(), p.getPoints());
 			}
 		} catch (UserDoesNotExistException e) {
 			System.out.println(USER_DOES_NOT_EXIST);

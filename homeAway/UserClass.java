@@ -7,31 +7,31 @@ import dataStructures.IterableStack;
 /**
  * The User class represents a User in the database containing various
  * Information about a person.
- * 
- * @author Jorge Pereira (49771) jff.pereira@campus.fct.unl.pt
+ * @author Jorge Pereira (49771) jff.pereira@campus.fct.unl.pt 
  * @author Tiago Fornelos (49780) t.fornelos@campus.fct.unl.pt
  */
-class UserClass implements UserWritable {
-	// Constants
-
+class UserClass implements UserWritable{
+	//Constants
+	
 	private static final long serialVersionUID = 0L;
 
-	// Variables
+	//Variables
 	private String idUser;
-
+	
 	private String name;
 	private String nacionality;
 	private String address;
 	private String email;
 	private String phoneNumber;
-
+	
 	private Property properties;
 	private int numberProperties;
-
+	
 	private IterableStack<Stay> stays;
-
-	// Constructor
-	public UserClass(String idUser, String email, String phoneNumber, String nacionality, String address, String name) {
+	
+	//Constructor
+	public UserClass(String idUser, String email, String phoneNumber,
+			String nacionality, String address, String name) {
 		this.idUser = idUser;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
@@ -39,11 +39,12 @@ class UserClass implements UserWritable {
 		this.address = address;
 		this.name = name;
 		this.numberProperties = 0;
-
+		
 		stays = new IterableStackInList<Stay>();
 		properties = null;
 	}
-
+	
+	
 	@Override
 	public String getIdUser() {
 		return this.idUser;
@@ -95,12 +96,14 @@ class UserClass implements UserWritable {
 		this.numberProperties++;
 	}
 
+
 	@Override
 	public Property listProperties() throws UserIsNotOwnerException {
-		if (this.getNumberProperties() == 0)
+		if(this.getNumberProperties() == 0)
 			throw new UserIsNotOwnerException();
 		return properties;
 	}
+
 
 	@Override
 	public boolean isOwner() {
@@ -113,26 +116,20 @@ class UserClass implements UserWritable {
 
 	@Override
 	public void addStay(Property property, int points) {
-		stays.push(new StayClass(property, points));
+		stays.push(new StayClass(property, points)); 
 	}
+
 
 	@Override
 	public Iterator<Stay> getStaysIterator() {
 		return stays.iterator();
 	}
 
+
 	@Override
 	public void removeProperty(String idHome) {
 		this.properties = null;
 		this.numberProperties--;
 	}
-
-	@Override
-	public void changeInfo(String newEmail, String newNumber, String newAddress) {
-		this.setAddress(newAddress);
-		this.setEmail(newEmail);
-		this.setPhoneNumber(newNumber);
-		
-	}
-
+	
 }

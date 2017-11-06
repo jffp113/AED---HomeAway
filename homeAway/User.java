@@ -69,5 +69,4 @@ public interface User extends Serializable{
 	public Iterator<Stay> getStaysIterator(); 
 	
 	
-	
 }

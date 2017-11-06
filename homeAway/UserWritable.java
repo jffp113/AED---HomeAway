@@ -37,18 +37,11 @@ interface UserWritable extends User  {
 	 * @param property Stay Property
 	 * @param points Points of the evaluation
 	 */
-   void addStay(Property property, int points);
+	public void addStay(Property property, int points);
 	
 	/**
 	 * Remove a certain property
 	 * @param idHome identification of the Property to be removed
 	 */
 	void removeProperty(String idHome);
-	/**
-	 * Set all user information
-	 * @param newEmail New Email as a String
-	 * @param newNumber New Number as a string
-	 * @param newAddress  New Adress as a String
-	 */
-	void changeInfo(String newEmail,String newNumber,String newAddress);
 }

@@ -42,11 +42,7 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 		UserWritable user = users.find(idUser.toLowerCase());
 		if (user == null)
 			throw new UserDoesNotExistException();
-
-		user.setEmail(email);
-		user.setPhoneNumber(phoneNumber);
-		user.setAddress(address);
-
+	user.changeInfo(email, phoneNumber, address);
 	}
 
 	@Override

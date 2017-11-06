@@ -23,33 +23,31 @@ class HashTableIterator<K, V> implements Iterator<Entry<K, V>> {
 
 	@Override
 	public boolean hasNext() {
-		return currentIt.hasNext();
+		return currentIt.hasNext(); //check if the current iterator has a next entry
 	}
 
 	@Override
 	public Entry<K, V> next() throws NoSuchElementException {
-		if (!hasNext())
-			throw new NoSuchElementException();
-		Entry<K, V> next = currentIt.next();
-		if (!hasNext())
-			nextList();
-		return next;
+		if (!hasNext())							// if there is no next entry the method
+			throw new NoSuchElementException(); // throws an exception
+		Entry<K, V> next = currentIt.next();    //get the next entry from currentIt
+		if (!hasNext())							//check if there are more entries in currentIt
+			nextList();							//if not get the next list
+		return next;							//return the entry
 	}
 
 	@Override
-	public void rewind() {
+	public void rewind() {				
 		current = 0;
-		currentIt = table[0].iterator();
+		currentIt = table[0].iterator(); 
 		nextList();
 	}
 
 	protected void nextList() {
 
-		while (current < this.table.length && table[current].isEmpty())
-			current++;
+		while (current < this.table.length && table[current].isEmpty()) //get the next list not empty
+			current++;													//from the hash table
 		if(current <this.table.length)
-		currentIt = table[current++].iterator();
-		
+		currentIt = table[current++].iterator();	
 	}
-
 }

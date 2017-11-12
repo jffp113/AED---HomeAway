@@ -2,9 +2,7 @@ package dataStructures;
 
 class EntryClass<K, V> implements Entry<K, V> {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	protected K key;
 	protected V value;

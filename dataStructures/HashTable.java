@@ -31,9 +31,9 @@ public abstract class HashTable<K,V> implements Dictionary<K,V>
     protected int maxSize;
     
     
-    //
+    
     // Public Static Methods
-    //
+    
     
     
     /**
@@ -54,9 +54,9 @@ public abstract class HashTable<K,V> implements Dictionary<K,V>
     }
 
 
-    //
+    
     // Protected Static Methods
-    //
+    
 
 
     /**
@@ -92,9 +92,9 @@ public abstract class HashTable<K,V> implements Dictionary<K,V>
     };
 
 
-    //
+    
     // Public Instance Methods
-    //
+    
 
 
     @Override
@@ -122,9 +122,9 @@ public abstract class HashTable<K,V> implements Dictionary<K,V>
     public abstract Iterator<Entry<K,V>> iterator( );
 
 
-    //
+    
     // Protected Instance Methods
-    //
+    
 
     
     /**

@@ -79,7 +79,7 @@ public class OrderedDoubleList<K extends Comparable<K>,V> implements OrderedDict
 		DListNode<Entry<K,V>> s = searchSpot(key);
 		DListNode<Entry<K,V>> node;
 		
-		if(s.getElement().getKey().compareTo(key) == 0) {//If the key is present substitute with new valeu
+		if(s.getElement().getKey().compareTo(key) == 0) {//If the key is present substitute with new value
 			oldV = s.getElement().getValue();
 			s.setElement(new EntryClass<K,V>(key,value));
 		}

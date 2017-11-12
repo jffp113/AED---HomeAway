@@ -8,15 +8,14 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 	// Constants
 	private static final int NUMBER_USER = 15000;
 	private static final int NUMBER_PROPERTIES = 7500;
-
 	private static final long serialVersionUID = 0L;
 
 	// Variables
-	//private Property properties;
+	// private Property properties;
 	private Dictionary<String, PropertyWritable> properties;
 	private Dictionary<String, UserWritable> users;
-	private Dictionary<String,PropertyWritable> localProperties;
-	
+	private Dictionary<String, PropertyWritable> localProperties;
+
 	// Constructor
 	public HomeAwayManagerClass() {
 		users = new ChainedHashTable<String, UserWritable>(NUMBER_USER);
@@ -29,9 +28,9 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 			String name) throws UserAlreadyExistException {
 		UserWritable user = users.find(idUser.toLowerCase());
 
-		if (user != null) 
+		if (user != null)
 			throw new UserAlreadyExistException();
-		
+
 		user = new UserClass(idUser, email, phoneNumber, nacionality, address, name);
 		users.insert(idUser.toLowerCase(), user);
 	}
@@ -42,7 +41,7 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 		UserWritable user = users.find(idUser.toLowerCase());
 		if (user == null)
 			throw new UserDoesNotExistException();
-	user.changeInfo(email, phoneNumber, address);
+		user.changeInfo(email, phoneNumber, address);
 	}
 
 	@Override
@@ -66,11 +65,12 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 	}
 
 	public void addProperty(String idHome, String idUser, int price, int maxPersons, String local, String description,
-			String address) throws InvalidInformationException, UserDoesNotExistException, PropertyAlreadyExistException {
-		
+			String address)
+			throws InvalidInformationException, UserDoesNotExistException, PropertyAlreadyExistException {
+
 		UserWritable user = users.find(idUser.toLowerCase());
 		PropertyWritable property = properties.find(idHome.toLowerCase());
-		
+
 		if (price <= 0 || maxPersons <= 0 || maxPersons > 20)
 			throw new InvalidInformationException();
 		else if (user == null)
@@ -86,13 +86,13 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 
 	public void removeProperty(String idHome) throws PropertyDoesNotExistException, PropertyAlreadyVisitedException {
 		PropertyWritable property = properties.find(idHome.toLowerCase());
-		
+
 		if (property == null)
 			throw new PropertyDoesNotExistException();
 		else if (property.getNumberOfvisits() != 0)
 			throw new PropertyAlreadyVisitedException();
-		
-		((UserWritable)property.getOwner()).removeProperty(idHome);
+
+		((UserWritable) property.getOwner()).removeProperty(idHome);
 		localProperties.remove(property.getLocal().toLowerCase());
 		properties.remove(idHome.toLowerCase());
 
@@ -112,7 +112,7 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 																									// user
 		UserWritable user = users.find(idUser.toLowerCase());
 		PropertyWritable property = properties.find(idHome.toLowerCase());
-		
+
 		if (points < 0)
 			throw new InvalidInformationException();
 		else if (user == null)
@@ -128,10 +128,10 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 
 	public void addStay(String idUser, String idHome)
 			throws UserDoesNotExistException, PropertyDoesNotExistException, TravellerIsNotOwnerException {
-		
+
 		UserWritable user = users.find(idUser.toLowerCase());
 		PropertyWritable property = properties.find(idHome.toLowerCase());
-		
+
 		if (user == null)
 			throw new UserDoesNotExistException();
 		else if (property == null)
@@ -145,7 +145,7 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 
 	public Property listOwnerProperties(String idUser) throws UserDoesNotExistException, UserIsNotOwnerException {
 		UserWritable user = users.find(idUser.toLowerCase());
-		
+
 		if (user == null)
 			throw new UserDoesNotExistException();
 
@@ -168,7 +168,7 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 
 		if (persons <= 0 || persons > 20)
 			throw new InvalidInformationException();
-		else if (property == null || property.getMaxPersons() < persons )
+		else if (property == null || property.getMaxPersons() < persons)
 			throw new NoSearchResultsException();
 
 		return property;

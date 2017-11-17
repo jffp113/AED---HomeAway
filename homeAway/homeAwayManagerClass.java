@@ -94,11 +94,8 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 			localProperties.insert(local.toLowerCase(),p);
 		}
 		else if(lp.find(0) == null) {
-			OrderedDictionary<Integer,OrderedDictionary<String,Property>> p = new BinarySearchTree<Integer,OrderedDictionary<String,Property>>();
 			OrderedDictionary<String, Property> s = new BinarySearchTree<String,Property>();
 			s.insert(idHome, property);
-			p.insert(0, s);
-			
 			lp.insert(0, s);
 		}
 		else {
@@ -116,10 +113,11 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 			throw new PropertyDoesNotExistException();
 		else if (property.getNumberOfvisits() != 0)
 			throw new PropertyAlreadyVisitedException();
-
+		Property p = properties.remove(idHome.toLowerCase());
 		((UserWritable) property.getOwner()).removeProperty(idHome);
-		localProperties.remove(property.getLocal().toLowerCase());
-		properties.remove(idHome.toLowerCase());
+		localProperties.find(p.getLocal()).find(p.getPoints()).remove(idHome);
+		//localProperties.remove(property.getLocal().toLowerCase());
+		
 
 	}
 

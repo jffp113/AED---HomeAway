@@ -330,9 +330,13 @@ public class Main {
 	private static void listOwnerProperties(Scanner in, HomeAwayManager hm) {
 		String idUser = in.nextLine().trim();
 		try {
-			Property p = hm.listOwnerProperties(idUser);
-			System.out.printf(PROPERTY_SEARCH, p.getIdHome(), p.getDescription(), p.getAdress(), p.getLocal(),
+			Iterator<Property> it = hm.listOwnerProperties(idUser);
+			Property p;
+			while(it.hasNext()) {
+				p = it.next();
+				System.out.printf(PROPERTY_SEARCH, p.getIdHome(), p.getDescription(), p.getAdress(), p.getLocal(),
 					p.getPrice(), p.getMaxPersons(), p.getPoints());
+			}
 		} catch (UserDoesNotExistException e) {
 			System.out.println(USER_DOES_NOT_EXIST);
 		} catch (UserIsNotOwnerException e) {

@@ -1,8 +1,10 @@
 package homeAway;
 
+import dataStructures.BinarySearchTree;
 import dataStructures.ChainedHashTable;
 import dataStructures.Dictionary;
 import dataStructures.Iterator;
+import dataStructures.OrderedDictionary;
 
 public class HomeAwayManagerClass implements HomeAwayManager {
 	// Constants
@@ -13,14 +15,15 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 	// Variables
 	// private Property properties;
 	private Dictionary<String, PropertyWritable> properties;
-	private Dictionary<String, UserWritable> users;
-	private Dictionary<String, PropertyWritable> localProperties;
+	private Dictionary<String, UserWritable> users;							//idhome
+	private Dictionary<String, OrderedDictionary<Integer,OrderedDictionary<String,Property>>> localProperties;
 
+	
 	// Constructor
 	public HomeAwayManagerClass() {
 		users = new ChainedHashTable<String, UserWritable>(NUMBER_USER);
 		properties = new ChainedHashTable<String, PropertyWritable>(NUMBER_PROPERTIES);
-		localProperties = new ChainedHashTable<String, PropertyWritable>(NUMBER_PROPERTIES);
+		localProperties = new ChainedHashTable<String, OrderedDictionary<Integer,OrderedDictionary<String,Property>>>(NUMBER_PROPERTIES);
 	}
 
 	@Override
@@ -80,7 +83,29 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 
 		property = new PropertyClass(idHome, user, price, maxPersons, local, description, address);
 		properties.insert(idHome.toLowerCase(), property);
-		localProperties.insert(local.toLowerCase(), property);
+		
+		OrderedDictionary<Integer,OrderedDictionary<String,Property>> lp  = localProperties.find(local);
+		
+		if(lp == null) {
+			OrderedDictionary<Integer,OrderedDictionary<String,Property>> p = new BinarySearchTree<Integer,OrderedDictionary<String,Property>>();
+			OrderedDictionary<String, Property> s = new BinarySearchTree<String,Property>();
+			s.insert(idHome, property);
+			p.insert(0, s);
+			localProperties.insert(local.toLowerCase(),p);
+		}
+		else if(lp.find(0) == null) {
+			OrderedDictionary<Integer,OrderedDictionary<String,Property>> p = new BinarySearchTree<Integer,OrderedDictionary<String,Property>>();
+			OrderedDictionary<String, Property> s = new BinarySearchTree<String,Property>();
+			s.insert(idHome, property);
+			p.insert(0, s);
+			
+			lp.insert(0, s);
+		}
+		else {
+			lp.find(0).insert(idHome, property);
+		}
+		
+		
 		user.addNewProperty(property);
 	}
 
@@ -143,7 +168,7 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 		property.addStay();
 	}
 
-	public Property listOwnerProperties(String idUser) throws UserDoesNotExistException, UserIsNotOwnerException {
+	public Iterator<Property> listOwnerProperties(String idUser) throws UserDoesNotExistException, UserIsNotOwnerException {
 		UserWritable user = users.find(idUser.toLowerCase());
 
 		if (user == null)

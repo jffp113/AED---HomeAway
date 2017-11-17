@@ -1,7 +1,10 @@
 package homeAway;
 
 import dataStructures.Iterator;
+import dataStructures.EntryFilterIterator;
+import dataStructures.OrderedDictionary;
 import dataStructures.IterableStackInList;
+import dataStructures.BinarySearchTree;
 import dataStructures.IterableStack;
 
 /**
@@ -25,7 +28,8 @@ class UserClass implements UserWritable {
 	private String email;
 	private String phoneNumber;
 
-	private Property properties;
+	//private Property properties;
+	private OrderedDictionary<String,Property> properties;
 	private int numberProperties;
 
 	private IterableStack<Stay> stays;
@@ -41,7 +45,7 @@ class UserClass implements UserWritable {
 		this.numberProperties = 0;
 
 		stays = new IterableStackInList<Stay>();
-		properties = null;
+		properties = new BinarySearchTree<String,Property>();
 	}
 
 	@Override
@@ -90,16 +94,16 @@ class UserClass implements UserWritable {
 	}
 
 	@Override
-	public void addNewProperty(Property newProp) {
-		this.properties = newProp;
+	public void addNewProperty(Property newProp) {//See if throws exception
+		properties.insert(newProp.getIdHome().toLowerCase(), newProp);
 		this.numberProperties++;
 	}
 
 	@Override
-	public Property listProperties() throws UserIsNotOwnerException {
+	public Iterator<Property> listProperties() throws UserIsNotOwnerException {
 		if (this.getNumberProperties() == 0)
 			throw new UserIsNotOwnerException();
-		return properties;
+		return new EntryFilterIterator<String,Property>(properties.iterator());
 	}
 
 	@Override

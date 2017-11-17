@@ -48,7 +48,7 @@ public interface User extends Serializable{
 	String getPhoneNumber();
 	
 	
-	Property listProperties() throws UserIsNotOwnerException;
+	Iterator<Property> listProperties() throws UserIsNotOwnerException;
 	
 	/**
 	 * Checks if a user is Owner of a Properties

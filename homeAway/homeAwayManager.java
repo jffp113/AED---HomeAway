@@ -118,7 +118,7 @@ public interface HomeAwayManager extends Serializable {
 	 * @throws UserDoesNotExistException Exception if the User Does Not exist
 	 * @throws UserIsNotOwnerException Exception if the User if not Owner
 	 */
-	public Property listOwnerProperties(String idUser) throws UserDoesNotExistException,UserIsNotOwnerException;
+	public Iterator<Property> listOwnerProperties(String idUser) throws UserDoesNotExistException,UserIsNotOwnerException;
 	
 	/**
 	 * This method returns a Iterator to the User stays

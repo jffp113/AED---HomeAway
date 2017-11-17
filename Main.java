@@ -399,9 +399,14 @@ public class Main {
 	private static void listBestProperties(Scanner in, HomeAwayManager hm) {
 		String local = in.nextLine().trim();
 		try {
-			Property p = hm.listBestProperty(local);
+			Iterator<Property> it = hm.listBestProperty(local);
+			Property p = null;
+			while(it.hasNext()) {
+				p = it.next();
 			System.out.printf(PROPERTY_SEARCH, p.getIdHome(), p.getDescription(), p.getAdress(), p.getLocal(),
 					p.getPrice(), p.getMaxPersons(), p.getPoints());
+			
+			}
 		} catch (NoSearchResultsException e) {
 			System.out.println(NO_RESULTS);
 		}

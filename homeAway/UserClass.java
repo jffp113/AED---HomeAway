@@ -127,7 +127,7 @@ class UserClass implements UserWritable {
 
 	@Override
 	public void removeProperty(String idHome) {
-		this.properties = null;
+		this.properties.remove(idHome);
 		this.numberProperties--;
 	}
 

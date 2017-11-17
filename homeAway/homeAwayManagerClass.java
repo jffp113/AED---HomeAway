@@ -15,7 +15,7 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 	// Variables
 	// private Property properties;
 	private Dictionary<String, PropertyWritable> properties;
-	private Dictionary<String, UserWritable> users;							//idhome
+	private Dictionary<String, UserWritable> users;							
 	private Dictionary<String, OrderedDictionary<Integer,OrderedDictionary<String,Property>>> localProperties;
 
 	
@@ -84,41 +84,28 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 		property = new PropertyClass(idHome, user, price, maxPersons, local, description, address);
 		properties.insert(idHome.toLowerCase(), property);
 		
-		OrderedDictionary<Integer,OrderedDictionary<String,Property>> lp  = localProperties.find(local);
+		//FASE 3
+		this.addToLocal(property, 0, local);
 		
-		if(lp == null) {
-			OrderedDictionary<Integer,OrderedDictionary<String,Property>> p = new BinarySearchTree<Integer,OrderedDictionary<String,Property>>();
-			OrderedDictionary<String, Property> s = new BinarySearchTree<String,Property>();
-			s.insert(idHome, property);
-			p.insert(0, s);
-			localProperties.insert(local.toLowerCase(),p);
-		}
-		else if(lp.find(0) == null) {
-			OrderedDictionary<String, Property> s = new BinarySearchTree<String,Property>();
-			s.insert(idHome, property);
-			lp.insert(0, s);
-		}
-		else {
-			lp.find(0).insert(idHome, property);
-		}
-		
-		
+		//FIM
 		user.addNewProperty(property);
 	}
 
 	public void removeProperty(String idHome) throws PropertyDoesNotExistException, PropertyAlreadyVisitedException {
-		PropertyWritable property = properties.find(idHome.toLowerCase());
+		PropertyWritable p = properties.find(idHome.toLowerCase());
 
-		if (property == null)
+		if (p == null)
 			throw new PropertyDoesNotExistException();
-		else if (property.getNumberOfvisits() != 0)
+		else if (p.getNumberOfvisits() != 0)
 			throw new PropertyAlreadyVisitedException();
-		Property p = properties.remove(idHome.toLowerCase());
-		((UserWritable) property.getOwner()).removeProperty(idHome);
-		localProperties.find(p.getLocal()).find(p.getPoints()).remove(idHome);
-		//localProperties.remove(property.getLocal().toLowerCase());
 		
-
+		 properties.remove(idHome.toLowerCase());
+		
+		((UserWritable) p.getOwner()).removeProperty(idHome);
+		
+		//Fase 3
+		this.removeFromLocal(p);
+		
 	}
 
 	public Property getPropertyInformation(String idHome) throws PropertyDoesNotExistException {
@@ -131,8 +118,8 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 	}
 
 	public void addStayEvaluation(String idUser, String idHome, int points) throws InvalidInformationException,
-			UserDoesNotExistException, PropertyDoesNotExistException, TravellerIsOwnerException { // Listagem dentro
-																									// user
+			UserDoesNotExistException, PropertyDoesNotExistException, TravellerIsOwnerException { 
+		
 		UserWritable user = users.find(idUser.toLowerCase());
 		PropertyWritable property = properties.find(idHome.toLowerCase());
 
@@ -145,10 +132,50 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 		else if (property.getOwner().getIdUser().equalsIgnoreCase(idUser))
 			throw new TravellerIsOwnerException();
 
+		this.removeFromLocal(property);
+	
+		
 		property.evaluateStay(points);
 		user.addStay(property, points);
+		
+		this.addToLocal(property, property.getPoints(), property.getLocal());
+		
 	}
 
+	
+	private void removeFromLocal(Property p) {
+		OrderedDictionary<Integer,OrderedDictionary<String,Property>> dePoints = localProperties.find(p.getLocal().toLowerCase());
+		OrderedDictionary<String,Property> deId = dePoints.find(p.getPoints());
+		deId.remove(p.getIdHome().toLowerCase());
+		
+		if(deId.isEmpty()) {
+			dePoints.remove(p.getPoints());
+			if(dePoints.isEmpty())
+				localProperties.remove(p.getLocal());
+		}
+	}
+	
+	private void addToLocal(Property property, int points, String local) {
+		OrderedDictionary<Integer,OrderedDictionary<String,Property>> lp  = localProperties.find(local.toLowerCase());
+		
+		if(lp == null) {
+			OrderedDictionary<Integer,OrderedDictionary<String,Property>> p = new BinarySearchTree<Integer,OrderedDictionary<String,Property>>();
+			OrderedDictionary<String, Property> s = new BinarySearchTree<String,Property>();
+			s.insert(property.getIdHome().toLowerCase(), property);
+			p.insert(points, s);
+			localProperties.insert(local.toLowerCase(),p);
+		}
+		else if(lp.find(points) == null) {
+			OrderedDictionary<String, Property> s = new BinarySearchTree<String,Property>();
+			s.insert(property.getIdHome().toLowerCase(), property);
+			lp.insert(points, s);
+		}
+		else {
+			lp.find(points).insert(property.getIdHome().toLowerCase(), property);
+		}
+		
+	}
+	
 	public void addStay(String idUser, String idHome)
 			throws UserDoesNotExistException, PropertyDoesNotExistException, TravellerIsNotOwnerException {
 
@@ -187,7 +214,7 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 
 	public Property searchProperty(int persons, String local)
 			throws InvalidInformationException, NoSearchResultsException {
-		PropertyWritable property = localProperties.find(local.toLowerCase());
+		PropertyWritable property = null ;//localProperties.find(local.toLowerCase());
 
 		if (persons <= 0 || persons > 20)
 			throw new InvalidInformationException();
@@ -197,10 +224,14 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 		return property;
 	}
 
-	public Property listBestProperty(String local) throws NoSearchResultsException {
-		PropertyWritable property = localProperties.find(local.toLowerCase());
-		if (property == null)
+	public Iterator<Property> listBestProperty(String local) throws NoSearchResultsException {
+		OrderedDictionary<Integer,OrderedDictionary<String,Property>> lp  = localProperties.find(local.toLowerCase());
+		
+		if (lp == null)
 			throw new NoSearchResultsException();
-		return property;
+		
+		return new IteratorOfIterators(lp.iterator());
+		
+		
 	}
 }

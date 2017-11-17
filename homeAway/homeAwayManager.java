@@ -146,6 +146,6 @@ public interface HomeAwayManager extends Serializable {
 	 * @return Iterator to best Property
 	 * @throws NoSearchResultsException
 	 */
-	public Property listBestProperty(String local) throws NoSearchResultsException;
+	public Iterator<Property> listBestProperty(String local) throws NoSearchResultsException;
 
 }

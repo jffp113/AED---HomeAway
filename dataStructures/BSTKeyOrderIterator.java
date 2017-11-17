@@ -31,9 +31,9 @@ public class BSTKeyOrderIterator<K, V> implements Iterator<Entry<K,V>> {
 		
 		BSTNode<K,V> next = stack.pop();
 		
-		if(next.getRight() != null) {
-			stack.push(next.getRight());
-			pushLeft(next.getRight());
+		if(next.getLeft() != null) {
+			stack.push(next.getLeft());
+			pushLeft(next.getLeft());
 		}
 			
 		
@@ -48,9 +48,9 @@ public class BSTKeyOrderIterator<K, V> implements Iterator<Entry<K,V>> {
 	}
 	
 	protected void pushLeft(BSTNode<K,V> node){
-		while(node.getLeft() != null) {
-			stack.push(node.getLeft());
-			node = node.getLeft();
+		while(node.getRight() != null) {
+			stack.push(node.getRight());
+			node = node.getRight();
 		}
 	}
 }

@@ -17,6 +17,7 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 	private Dictionary<String, PropertyWritable> properties;
 	private Dictionary<String, UserWritable> users;							
 	private Dictionary<String, OrderedDictionary<Integer,OrderedDictionary<String,Property>>> localProperties;
+	private Dictionary<String, OrderedDictionary<Integer,OrderedDictionary<String,Property>>> searchProperties;
 
 	
 	// Constructor
@@ -24,6 +25,7 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 		users = new ChainedHashTable<String, UserWritable>(NUMBER_USER);
 		properties = new ChainedHashTable<String, PropertyWritable>(NUMBER_PROPERTIES);
 		localProperties = new ChainedHashTable<String, OrderedDictionary<Integer,OrderedDictionary<String,Property>>>(NUMBER_PROPERTIES);
+		searchProperties = new ChainedHashTable<String, OrderedDictionary<Integer,OrderedDictionary<String,Property>>>(NUMBER_PROPERTIES);
 	}
 
 	@Override
@@ -86,7 +88,7 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 		
 		//FASE 3
 		this.addToLocal(property, 0, local);
-		
+		this.addToSearch(property);
 		//FIM
 		user.addNewProperty(property);
 	}
@@ -105,7 +107,7 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 		
 		//Fase 3
 		this.removeFromLocal(p);
-		
+		this.removeFromSearch(p);
 	}
 
 	public Property getPropertyInformation(String idHome) throws PropertyDoesNotExistException {
@@ -151,7 +153,7 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 		if(deId.isEmpty()) {
 			dePoints.remove(p.getPoints());
 			if(dePoints.isEmpty())
-				localProperties.remove(p.getLocal());
+				localProperties.remove(p.getLocal().toLowerCase());
 		}
 	}
 	
@@ -174,6 +176,38 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 			lp.find(points).insert(property.getIdHome().toLowerCase(), property);
 		}
 		
+	}
+	
+	private void removeFromSearch(Property p) {
+		OrderedDictionary<Integer,OrderedDictionary<String,Property>> dePeople = searchProperties.find(p.getLocal().toLowerCase());
+		OrderedDictionary<String,Property> deId = dePeople.find(p.getMaxPersons());
+		deId.remove(p.getIdHome().toLowerCase());
+		
+		if(deId.isEmpty()) {
+			dePeople.remove(p.getMaxPersons());
+			if(dePeople.isEmpty())
+				localProperties.remove(p.getLocal().toLowerCase());
+		}
+	}
+
+	private void addToSearch(Property property) {
+			OrderedDictionary<Integer,OrderedDictionary<String,Property>> lp  = localProperties.find(property.getLocal().toLowerCase());
+		
+		if(lp == null) {
+			OrderedDictionary<Integer,OrderedDictionary<String,Property>> p = new BinarySearchTree<Integer,OrderedDictionary<String,Property>>();
+			OrderedDictionary<String, Property> s = new BinarySearchTree<String,Property>();
+			s.insert(property.getIdHome().toLowerCase(), property);
+			p.insert(property.getMaxPersons(), s);
+			localProperties.insert(property.getLocal().toLowerCase(),p);
+		}
+		else if(lp.find(property.getMaxPersons()) == null) {
+			OrderedDictionary<String, Property> s = new BinarySearchTree<String,Property>();
+			s.insert(property.getIdHome().toLowerCase(), property);
+			lp.insert(property.getMaxPersons(), s);
+		}
+		else {
+			lp.find(property.getMaxPersons()).insert(property.getIdHome().toLowerCase(), property);
+		}
 	}
 	
 	public void addStay(String idUser, String idHome)
@@ -230,7 +264,7 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 		if (lp == null)
 			throw new NoSearchResultsException();
 		
-		return new IteratorOfIterators(lp.iterator());
+		return new IteratorOfIterators<Integer,String,Property>(lp.iterator());
 		
 		
 	}

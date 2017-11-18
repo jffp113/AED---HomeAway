@@ -379,9 +379,13 @@ public class Main {
 		int people = in.nextInt();
 		String local = in.nextLine().trim();
 		try {
-			Property p = hm.searchProperty(people, local);
+			Property p = null;
+			Iterator<Property> it = hm.searchProperty(people, local);
+			while(it.hasNext()) {
+				p = it.next();
 			System.out.printf(PROPERTY_SEARCH, p.getIdHome(), p.getDescription(), p.getAdress(), p.getLocal(),
 					p.getPrice(), p.getMaxPersons(), p.getPoints());
+			}
 		} 
 		catch (InvalidInformationException e) {
 			System.out.println(INVALID_INFO);

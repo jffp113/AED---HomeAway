@@ -5,6 +5,13 @@ import dataStructures.Iterator;
 import dataStructures.NoSuchElementException;
 import dataStructures.OrderedDictionary;
 
+/**
+ * This Iterator can receive multiples Iterators in order to iterate all without the need
+ * of 2 cycles
+ *
+ * @author Jorge Pereira (49771) jff.pereira@campus.fct.unl.pt 
+ * @author Tiago Fornelos (49780) t.fornelos@campus.fct.unl.pt
+ */
 public class IteratorOfIterators<K,SK  extends Comparable<SK>,E> implements Iterator<E> {
 
 

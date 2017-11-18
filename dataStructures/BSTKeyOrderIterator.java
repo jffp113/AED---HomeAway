@@ -1,10 +1,10 @@
 package dataStructures;
+
 /**
- * 
- * @author jorge
+ * This Iterator Iterates the BST Nodes
  *
- * @param <K>
- * @param <V>
+ * @author Jorge Pereira (49771) jff.pereira@campus.fct.unl.pt 
+ * @author Tiago Fornelos (49780) t.fornelos@campus.fct.unl.pt
  */
 public class BSTKeyOrderIterator<K, V> implements Iterator<Entry<K,V>> {
 	
@@ -31,9 +31,9 @@ public class BSTKeyOrderIterator<K, V> implements Iterator<Entry<K,V>> {
 		
 		BSTNode<K,V> next = stack.pop();
 		
-		if(next.getLeft() != null) {
-			stack.push(next.getLeft());
-			pushLeft(next.getLeft());
+		if(next.getRight() != null) {
+			stack.push(next.getRight());
+			pushLeft(next.getRight());
 		}
 			
 		
@@ -48,9 +48,9 @@ public class BSTKeyOrderIterator<K, V> implements Iterator<Entry<K,V>> {
 	}
 	
 	protected void pushLeft(BSTNode<K,V> node){
-		while(node.getRight() != null) {
-			stack.push(node.getRight());
-			node = node.getRight();
+		while(node.getLeft() != null) {
+			stack.push(node.getLeft());
+			node = node.getLeft();
 		}
 	}
 }

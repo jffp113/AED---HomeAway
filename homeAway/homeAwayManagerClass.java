@@ -16,7 +16,7 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 	// private Property properties;
 	private Dictionary<String, PropertyWritable> properties;
 	private Dictionary<String, UserWritable> users;							
-	private Dictionary<String, OrderedDictionary<Integer,OrderedDictionary<String,Property>>> localProperties;
+	private Dictionary<String, OrderedDictionary<InvertedInteger,OrderedDictionary<String,Property>>> localProperties;
 	private Dictionary<String, OrderedDictionary<Integer,OrderedDictionary<String,Property>>> searchProperties;
 
 	
@@ -24,7 +24,7 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 	public HomeAwayManagerClass() {
 		users = new ChainedHashTable<String, UserWritable>(NUMBER_USER);
 		properties = new ChainedHashTable<String, PropertyWritable>(NUMBER_PROPERTIES);
-		localProperties = new ChainedHashTable<String, OrderedDictionary<Integer,OrderedDictionary<String,Property>>>(NUMBER_PROPERTIES);
+		localProperties = new ChainedHashTable<String, OrderedDictionary<InvertedInteger,OrderedDictionary<String,Property>>>(NUMBER_PROPERTIES);
 		searchProperties = new ChainedHashTable<String, OrderedDictionary<Integer,OrderedDictionary<String,Property>>>(NUMBER_PROPERTIES);
 	}
 
@@ -146,34 +146,34 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 
 	
 	private void removeFromLocal(Property p) {
-		OrderedDictionary<Integer,OrderedDictionary<String,Property>> dePoints = localProperties.find(p.getLocal().toLowerCase());
-		OrderedDictionary<String,Property> deId = dePoints.find(p.getPoints());
+		OrderedDictionary<InvertedInteger,OrderedDictionary<String,Property>> dePoints = localProperties.find(p.getLocal().toLowerCase());
+		OrderedDictionary<String,Property> deId = dePoints.find(new InvertedInteger(p.getPoints()));
 		deId.remove(p.getIdHome().toLowerCase());
 		
 		if(deId.isEmpty()) {
-			dePoints.remove(p.getPoints());
+			dePoints.remove(new InvertedInteger(p.getPoints()));
 			if(dePoints.isEmpty())
 				localProperties.remove(p.getLocal().toLowerCase());
 		}
 	}
 	
 	private void addToLocal(Property property, int points, String local) {
-		OrderedDictionary<Integer,OrderedDictionary<String,Property>> lp  = localProperties.find(local.toLowerCase());
+		OrderedDictionary<InvertedInteger,OrderedDictionary<String,Property>> lp  = localProperties.find(local.toLowerCase());
 		
 		if(lp == null) {
-			OrderedDictionary<Integer,OrderedDictionary<String,Property>> p = new BinarySearchTree<Integer,OrderedDictionary<String,Property>>();
+			OrderedDictionary<InvertedInteger,OrderedDictionary<String,Property>> p = new BinarySearchTree<InvertedInteger,OrderedDictionary<String,Property>>();
 			OrderedDictionary<String, Property> s = new BinarySearchTree<String,Property>();
 			s.insert(property.getIdHome().toLowerCase(), property);
-			p.insert(points, s);
+			p.insert(new InvertedInteger(points), s);
 			localProperties.insert(local.toLowerCase(),p);
 		}
-		else if(lp.find(points) == null) {
+		else if(lp.find(new InvertedInteger(points)) == null) {
 			OrderedDictionary<String, Property> s = new BinarySearchTree<String,Property>();
 			s.insert(property.getIdHome().toLowerCase(), property);
-			lp.insert(points, s);
+			lp.insert(new InvertedInteger(points), s);
 		}
 		else {
-			lp.find(points).insert(property.getIdHome().toLowerCase(), property);
+			lp.find(new InvertedInteger(points)).insert(property.getIdHome().toLowerCase(), property);
 		}
 		
 	}
@@ -191,14 +191,14 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 	}
 
 	private void addToSearch(Property property) {
-			OrderedDictionary<Integer,OrderedDictionary<String,Property>> lp  = localProperties.find(property.getLocal().toLowerCase());
+			OrderedDictionary<Integer,OrderedDictionary<String,Property>> lp  = searchProperties.find(property.getLocal().toLowerCase());
 		
 		if(lp == null) {
 			OrderedDictionary<Integer,OrderedDictionary<String,Property>> p = new BinarySearchTree<Integer,OrderedDictionary<String,Property>>();
 			OrderedDictionary<String, Property> s = new BinarySearchTree<String,Property>();
 			s.insert(property.getIdHome().toLowerCase(), property);
 			p.insert(property.getMaxPersons(), s);
-			localProperties.insert(property.getLocal().toLowerCase(),p);
+			searchProperties.insert(property.getLocal().toLowerCase(),p);
 		}
 		else if(lp.find(property.getMaxPersons()) == null) {
 			OrderedDictionary<String, Property> s = new BinarySearchTree<String,Property>();
@@ -246,25 +246,26 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 		return user.getStaysIterator();
 	}
 
-	public Property searchProperty(int persons, String local)
+	public Iterator<Property> searchProperty(int people, String local)
 			throws InvalidInformationException, NoSearchResultsException {
-		PropertyWritable property = null ;//localProperties.find(local.toLowerCase());
+		
+		OrderedDictionary<Integer,OrderedDictionary<String,Property>> l = this.searchProperties.find(local.toLowerCase());
 
-		if (persons <= 0 || persons > 20)
+		if (people <= 0 || people > 20)
 			throw new InvalidInformationException();
-		else if (property == null || property.getMaxPersons() < persons)
+		else if (l == null)
 			throw new NoSearchResultsException();
 
-		return property;
+		return new FilterPeopleIterator(new IteratorOfIterators<Integer,String,Property>(l.iterator()), people);
 	}
 
 	public Iterator<Property> listBestProperty(String local) throws NoSearchResultsException {
-		OrderedDictionary<Integer,OrderedDictionary<String,Property>> lp  = localProperties.find(local.toLowerCase());
+		OrderedDictionary<InvertedInteger,OrderedDictionary<String,Property>> lp  = localProperties.find(local.toLowerCase());
 		
 		if (lp == null)
 			throw new NoSearchResultsException();
 		
-		return new IteratorOfIterators<Integer,String,Property>(lp.iterator());
+		return new IteratorOfIterators<InvertedInteger,String,Property>(lp.iterator());
 		
 		
 	}

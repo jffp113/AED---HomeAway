@@ -138,7 +138,7 @@ public interface HomeAwayManager extends Serializable {
 	 * @throws InvalidInformationException
 	 * @throws NoSearchResultsException
 	 */
-	public Property searchProperty(int persons,String local) throws InvalidInformationException, NoSearchResultsException;
+	public Iterator<Property> searchProperty(int persons,String local) throws InvalidInformationException, NoSearchResultsException;
 	
 	/**
 	 * List Best Properties on the database

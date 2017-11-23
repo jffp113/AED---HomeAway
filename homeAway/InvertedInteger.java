@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author Jorge Pereira (49771) jff.pereira@campus.fct.unl.pt 
  * @author Tiago Fornelos (49780) t.fornelos@campus.fct.unl.pt
  */
-public class InvertedInteger implements Comparable<InvertedInteger> , Serializable{
+class InvertedInteger implements Comparable<InvertedInteger> , Serializable{
 
 
 	private static final long serialVersionUID = 1L;

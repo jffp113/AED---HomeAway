@@ -27,7 +27,7 @@ public class FilterPeopleIterator implements Iterator<Property> {
 	
 	@Override
 	public boolean hasNext() {
-		return next != null;
+		return next != null && next.getMaxPersons() >= min;
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class FilterPeopleIterator implements Iterator<Property> {
 	public void rewind() {
 		it.rewind();
 		
-		while((next = it.next()).getMaxPersons() < min);
+		while(it.hasNext() && (next = it.next()).getMaxPersons() < min);
 		
 	}
 

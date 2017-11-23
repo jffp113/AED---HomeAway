@@ -43,14 +43,18 @@ public class BSTKeyOrderIterator<K, V> implements Iterator<Entry<K,V>> {
 	@Override
 	public void rewind() {
 		stack = new StackInList<BSTNode<K,V>>();
-		stack.push(root);
+		if(root != null)
+			stack.push(root);
+		
 		pushLeft(root);
 	}
 	
 	protected void pushLeft(BSTNode<K,V> node){
-		while(node.getLeft() != null) {
-			stack.push(node.getLeft());
-			node = node.getLeft();
+		if(node != null) {
+			while(node.getLeft() != null) {
+				stack.push(node.getLeft());
+				node = node.getLeft();
+			}
 		}
 	}
 }

@@ -34,7 +34,11 @@ public class IteratorOfIterators<K,SK  extends Comparable<SK>,E> implements Iter
 
 	@Override
 	public E next() throws NoSuchElementException {
-		E prop = secIt.next().getValue();
+		
+		if(secIt == null)
+			throw new NoSuchElementException();
+		
+			E prop = secIt.next().getValue();
 		
 		if(!secIt.hasNext()) {
 			if(primeIt.hasNext())
@@ -51,6 +55,7 @@ public class IteratorOfIterators<K,SK  extends Comparable<SK>,E> implements Iter
 	public void rewind() {
 		secIt = null;
 		primeIt.rewind();
+		
 		if(primeIt.hasNext())
 			secIt = primeIt.next().getValue().iterator();
 	

@@ -125,7 +125,7 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 		UserWritable user = users.find(idUser.toLowerCase());
 		PropertyWritable property = properties.find(idHome.toLowerCase());
 
-		if (points < 0)
+		if (points <= 0 || points > 20)
 			throw new InvalidInformationException();
 		else if (user == null)
 			throw new UserDoesNotExistException();
@@ -250,13 +250,18 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 			throws InvalidInformationException, NoSearchResultsException {
 		
 		OrderedDictionary<Integer,OrderedDictionary<String,Property>> l = this.searchProperties.find(local.toLowerCase());
-
+		
 		if (people <= 0 || people > 20)
 			throw new InvalidInformationException();
 		else if (l == null)
 			throw new NoSearchResultsException();
-
-		return new FilterPeopleIterator(new IteratorOfIterators<Integer,String,Property>(l.iterator()), people);
+		
+		Iterator<Property> it = new FilterPeopleIterator(new IteratorOfIterators<Integer,String,Property>(l.iterator()), people);
+		
+		if (!it.hasNext())
+			throw new NoSearchResultsException();
+		
+		return  it;
 	}
 
 	public Iterator<Property> listBestProperty(String local) throws NoSearchResultsException {

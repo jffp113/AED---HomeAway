@@ -18,7 +18,7 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 	private Dictionary<String, UserWritable> users;							
 	private Dictionary<String, OrderedDictionary<InvertedInteger,OrderedDictionary<String,Property>>> localProperties;
 	private Dictionary<String, OrderedDictionary<Integer,OrderedDictionary<String,Property>>> searchProperties;
-
+	
 	
 	// Constructor
 	public HomeAwayManagerClass() {

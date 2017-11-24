@@ -2,13 +2,21 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import java.util.Random;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import dataStructures.AVLTree;
+import dataStructures.AdvancedBSTree;
 import dataStructures.BinarySearchTree;
 import dataStructures.Entry;
 import dataStructures.Iterator;
+import dataStructures.OrderedDictionary;
+import dataStructures.OrderedDoubleList;
 
 public class BSTIteratorTest {
 
@@ -16,7 +24,7 @@ public class BSTIteratorTest {
 	
 	@Before
 	public void setUp() {
-		ea = new BinarySearchTree<Integer,Integer>();
+		ea = new AVLTree<Integer,Integer>();
 	}
 	
 	@After
@@ -24,28 +32,37 @@ public class BSTIteratorTest {
 		
 	}
 	
-	@Test
-	public void firtTest() {
+	@Test//(timeout = 1000)
+	public void ramdomTestTest() {
 		Iterator<Entry<Integer,Integer>> it;
-		ea.insert(5, 5);
-		ea.insert(1, 1);
-		ea.insert(20, 20);
-		ea.insert(21, 21);
-		ea.insert(15, 15);
-		ea.insert(9, 9);
-		ea.insert(10, 10);
-		ea.insert(3, 3);
+		Iterator<Entry<Integer,Integer>> it2;
+		OrderedDoubleList<Integer, Integer> st = new OrderedDoubleList<Integer,Integer>();
+		Random rd = new Random();
+		int addNumber = 1000;
+		int remNumber = 100;
+		int vect[] = new int[addNumber];
+		int rdInt;
+		for(int i = 0; i < addNumber ; i++) {
+			rdInt = rd.nextInt();
+			st.insert(rdInt, rdInt); ea.insert(rdInt, rdInt);
+			vect[i] = rdInt;
+		}
 		
 		it = ea.iterator();
+		it2 = st.iterator();
 		
-		assertEquals(new Integer(1),it.next().getKey());
-		assertEquals(new Integer(3),it.next().getKey());
-		assertEquals(new Integer(5),it.next().getKey());
-		assertEquals(new Integer(9),it.next().getKey());
-		assertEquals(new Integer(10),it.next().getKey());
-		assertEquals(new Integer(15),it.next().getKey());
-		assertEquals(new Integer(20),it.next().getKey());
-		assertEquals(new Integer(21),it.next().getKey());
+		for(int i = 0; i < remNumber; i++) {
+			rdInt = rd.nextInt();
+			if(rdInt < 0)
+				rdInt = rdInt*-1;
+			
+			st.remove(vect[rdInt % addNumber]);ea.remove(vect[rdInt % addNumber]);
+			System.out.println(vect[rdInt % addNumber]);
+		}
+		
+		while(it2.hasNext()) {
+			assertEquals(it2.next().getValue(),it.next().getValue());
+		}
 		assertFalse(it.hasNext());
 	}
 	

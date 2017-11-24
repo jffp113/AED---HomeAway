@@ -30,8 +30,7 @@ public class ChainedHashTable<K extends Comparable<K>, V> extends HashTable<K, V
 	 * @param capacity defines the table capacity.
 	 */
 	public ChainedHashTable(int capacity) {
-		int arraySize = HashTable.nextPrime((int) (1.1 * capacity));
-		initNew(arraySize);
+		initNew(capacity);
 	}
 
 	public ChainedHashTable() {
@@ -49,13 +48,14 @@ public class ChainedHashTable<K extends Comparable<K>, V> extends HashTable<K, V
 	}
 
 	@SuppressWarnings("unchecked")
-	protected void initNew(int size) {
-		table = (Dictionary<K, V>[]) new Dictionary[size];
+	protected void initNew(int capacity) {
+		int arraySize = HashTable.nextPrime((int) (1.1 * capacity));
+		table = (Dictionary<K, V>[]) new Dictionary[arraySize];
 
-		for (int i = 0; i < size; i++)
+		for (int i = 0; i < arraySize; i++)
 			table[i] = new OrderedDoubleList<K, V>();
 
-		maxSize = size;
+		maxSize = capacity;
 		currentSize = 0;
 	}
 

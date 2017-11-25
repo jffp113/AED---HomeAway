@@ -3,8 +3,8 @@ package dataStructures;
 /**
  * @author Jorge Pereira 49771 jff.pereira@campus.fct.unl.pt
  * @author Tiago Fornelos 49780 t.fornelos@campus.fct.unl.pt
- * @param <K>
- * @param <V>
+ * @param <K> Key
+ * @param <V> Value
  */
 public class OrderedDoubleList<K extends Comparable<K>,V> implements OrderedDictionary<K, V> {
 	//Constants

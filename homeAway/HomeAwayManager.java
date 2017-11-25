@@ -88,13 +88,13 @@ public interface HomeAwayManager extends Serializable {
 	
 	/**
 	 * This method allows to add a stay with evaluation
-	 * @param idUser 
-	 * @param idHome
-	 * @param points
-	 * @throws InvalidInformationException
-	 * @throws UserDoesNotExistException
-	 * @throws PropertyDoesNotExistException
-	 * @throws TravellerIsOwnerException
+	 * @param idUser id of the user
+	 * @param idHome id of the home
+	 * @param points Points to give to a stay
+	 * @throws InvalidInformationException  Invalid Information
+	 * @throws UserDoesNotExistException Exception if the User Does not exist
+	 * @throws PropertyDoesNotExistException Thrown when a property does not exist
+	 * @throws TravellerIsOwnerException Exception if the user is not the owner of the Property
 	 */
 	public void addStayEvaluation(String idUser,String idHome,int points) throws InvalidInformationException,
 	UserDoesNotExistException,PropertyDoesNotExistException, TravellerIsOwnerException;
@@ -124,8 +124,8 @@ public interface HomeAwayManager extends Serializable {
 	 * This method returns a Iterator to the User stays
 	 * @param idUser user to get his stays
 	 * @return Iterator to the Stays
-	 * @throws UserDoesNotExistException
-	 * @throws UserIsNotTravellerException
+	 * @throws UserDoesNotExistException Thrown when a user does not exist
+	 * @throws UserIsNotTravellerException thrown when a user is not a traveler
 	 */
 	public Iterator<Stay> listStays(String idUser) throws UserDoesNotExistException, UserIsNotTravellerException;
 	
@@ -135,8 +135,8 @@ public interface HomeAwayManager extends Serializable {
 	 * @param persons Number of persons
 	 * @param local Local Of the Property
 	 * @return Iterator to Properties
-	 * @throws InvalidInformationException
-	 * @throws NoSearchResultsException
+	 * @throws InvalidInformationException Invalid Information
+	 * @throws NoSearchResultsException No search result found
 	 */
 	public Iterator<Property> searchProperty(int persons,String local) throws InvalidInformationException, NoSearchResultsException;
 	
@@ -144,7 +144,7 @@ public interface HomeAwayManager extends Serializable {
 	 * List Best Properties on the database
 	 * @param local Local of the Property
 	 * @return Iterator to best Property
-	 * @throws NoSearchResultsException
+	 * @throws NoSearchResultsException No search result found
 	 */
 	public Iterator<Property> listBestProperty(String local) throws NoSearchResultsException;
 

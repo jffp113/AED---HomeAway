@@ -3,19 +3,18 @@ package tests;
 import static org.junit.Assert.*;
 
 import java.util.Random;
-import java.util.SortedSet;
-import java.util.TreeSet;
+
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import dataStructures.AVLTree;
-import dataStructures.AdvancedBSTree;
+
 import dataStructures.BinarySearchTree;
 import dataStructures.Entry;
 import dataStructures.Iterator;
-import dataStructures.OrderedDictionary;
+
 import dataStructures.OrderedDoubleList;
 
 public class BSTIteratorTest {

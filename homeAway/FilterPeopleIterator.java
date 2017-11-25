@@ -24,12 +24,16 @@ public class FilterPeopleIterator implements Iterator<Property> {
 		this.min = min;
 		this.rewind();
 	}
-	
+	/**
+	 * verify if next is null. If not, verifies if nxt's Capacity is higher then min
+	 */
 	@Override
 	public boolean hasNext() {
 		return next != null && next.getMaxPersons() >= min;
 	}
-
+	/**
+	 * Return the property saved at next. Verify if there is a next Property to be iterated
+	 */
 	@Override
 	public Property next() throws NoSuchElementException {
 		
@@ -45,7 +49,9 @@ public class FilterPeopleIterator implements Iterator<Property> {
 		
 		return toGo;
 	}
-
+	/**
+	 * Get the first Property that have capacity >= min and save at next
+	 */
 	@Override
 	public void rewind() {
 		it.rewind();

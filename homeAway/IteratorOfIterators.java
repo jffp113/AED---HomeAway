@@ -25,13 +25,18 @@ public class IteratorOfIterators<K,SK  extends Comparable<SK>,E> implements Iter
 		this.primeIt=it;
 		this.rewind();
 	}
-	
+	/**
+	 * Verify if secIt is not empty
+	 */
 	
 	@Override
 	public boolean hasNext() {
 		return secIt != null;
 	}
-
+	/**
+	 * Returnt the next element from secIt. If secIt !hasNext(), verify if primeIt
+	 * has a next entry. If so , gets the iterator for that entry and saves it at secIt.
+	 */
 	@Override
 	public E next() throws NoSuchElementException {
 		
@@ -50,7 +55,9 @@ public class IteratorOfIterators<K,SK  extends Comparable<SK>,E> implements Iter
 		return prop;
 	}
 
-
+	/**
+	 * gets the iterator for the first primeIt entry(if primeIt is not empty) and saves at secIt
+	 */
 	@Override
 	public void rewind() {
 		secIt = null;

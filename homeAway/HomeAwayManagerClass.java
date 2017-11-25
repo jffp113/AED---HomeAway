@@ -12,8 +12,8 @@ public class HomeAwayManagerClass implements HomeAwayManager {
 	private static final int NUMBER_PROPERTIES = 7500;
 	private static final long serialVersionUID = 0L;
 
-	// Variables
-	// private Property properties;
+	// Data Structures
+	
 	private Dictionary<String, PropertyWritable> properties;
 	private Dictionary<String, UserWritable> users;							
 	private Dictionary<String, OrderedDictionary<InvertedInteger,OrderedDictionary<String,Property>>> localProperties;

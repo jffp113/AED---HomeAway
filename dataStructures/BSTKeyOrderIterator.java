@@ -18,12 +18,17 @@ public class BSTKeyOrderIterator<K, V> implements Iterator<Entry<K,V>> {
 		this.root = root;
 		rewind();
 	}
-	
+	/**
+	 * Verify if the stack is not empty
+	 */
 	@Override
 	public boolean hasNext() {
 		return !stack.isEmpty();
 	}
-
+	/**
+	 * Verify if HasNext element. If so, pops the next element from the stack.
+	 * Verify if the element has right child, push the child and call the pushLeft method
+	 */
 	@Override
 	public Entry<K, V> next() throws NoSuchElementException {
 		if(!hasNext())
@@ -39,16 +44,22 @@ public class BSTKeyOrderIterator<K, V> implements Iterator<Entry<K,V>> {
 		
 		return next.getEntry();
 	}
-
+	/**
+	 * Verify if root is not null. Push the root to the stack and call pushLeft Starting at root
+	 */
 	@Override
 	public void rewind() {
 		stack = new StackInList<BSTNode<K,V>>();
-		if(root != null)
+		if(root != null) 
 			stack.push(root);
+			pushLeft(root);
 		
-		pushLeft(root);
 	}
-	
+	/**
+	 * while the current node has left child, the method while push his child to the stack and 
+	 * save the child at node	
+	 * @param node
+	 */
 	protected void pushLeft(BSTNode<K,V> node){
 		if(node != null) {
 			while(node.getLeft() != null) {

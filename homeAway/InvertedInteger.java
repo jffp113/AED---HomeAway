@@ -19,7 +19,9 @@ class InvertedInteger implements Comparable<InvertedInteger> , Serializable{
 	public InvertedInteger(int a) {
 		this.a = new Integer(a);
 	}
-	
+	/**
+	 * Inverted compareTo(to save the properties from the higher key to the lower one)
+	 */
 	
 	@Override
 	public int compareTo(InvertedInteger anotherInteger) {
